@@ -19,6 +19,6 @@ export const signUpOwner = (ownerRepository : ownerRepository)=> async (firstnam
     
     
     const createOwner = await ownerRepository.create(newOwner)
-    console.log("owner is comming");
+    
     return createOwner   
 }
