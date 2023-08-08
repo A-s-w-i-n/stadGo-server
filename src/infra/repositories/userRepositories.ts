@@ -36,7 +36,7 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
       { _id: id },
       { $set: { isblocked: true } }
     );
-    if (result.matchedCount > 0) {
+    if (result.matchedCount > 0) { 
       return result;
     }
   };

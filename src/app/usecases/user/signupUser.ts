@@ -29,4 +29,6 @@ export const signupUser =
     const createUser = await UserRepository.create(newUser);
 
     return createUser;
-  };
+  }
+
+  

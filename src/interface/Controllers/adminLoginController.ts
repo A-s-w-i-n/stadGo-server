@@ -12,7 +12,6 @@ export const AdminLoginController = async (req: Request, res: Response) => {
 
   try {
     const adminLoginCheck = await adminLogin(adminRepo)(email, password);
-    console.log(adminLoginCheck);
 
     if (adminLoginCheck) {
       const { _id, email } = JSON.parse(JSON.stringify(adminLoginCheck));

@@ -8,6 +8,8 @@ export type ownerRepository = {
   findOwner: () => Promise<Owner[]>;
   blockOwners(id: string): Promise<Owner | void | updateRes>;
   unblcokowner(id: string): Promise<Owner | void | updateRes>;
+  updatePremium (email : string) : Promise<Owner | void |updateRes>
+  ownerFetch(email : string) : Promise<Owner | null>
 };
 
 export const OwnerRepositoryImpl = (
@@ -21,7 +23,7 @@ export const OwnerRepositoryImpl = (
     
 
     const createOwner = await OwnerModel.create(owner);
-    console.log(createOwner);
+   
 
     return createOwner.toObject();
   };
@@ -53,6 +55,25 @@ export const OwnerRepositoryImpl = (
     if (result.matchedCount > 0) {
       return result;
     }
+  }
+  const updatePremium = async(email : string) : Promise<Owner|void | updateRes>=>{ 
+    const result = await ownerModel.updateOne({email : email},{$set:{premium : true}})
+    if(result.matchedCount>0){
+      return result
+    }
+  }
+  
+  const ownerFetch = async(email : string) : Promise<Owner|null >=>{
+
+    const result = await ownerModel.findOne({email})
+  
+    if(result){
+      
+    }
+    return  result
+
+    
+
   };
 
   return {
@@ -61,5 +82,7 @@ export const OwnerRepositoryImpl = (
     findOwner,
     blockOwners,
     unblcokowner,
+    updatePremium,
+    ownerFetch,
   };
 };

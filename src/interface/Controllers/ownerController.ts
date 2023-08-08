@@ -18,7 +18,7 @@ export const ownerSignUpController = async (req: Request, res: Response) => {
     companyname,
     location,
   } = req.body;
-  console.log(req.body);
+
   const premium = false;
   const isblocked = false;
   try {

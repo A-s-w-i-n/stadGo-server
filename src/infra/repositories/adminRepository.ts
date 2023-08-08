@@ -16,9 +16,7 @@ export const adminRepositoryimpl = (
     
 
     const admin = await AdminModel.findOne({ email });
-    const ad = await AdminModel.find();
-   
-
+    
     return admin ? admin.toObject() : null;
   };
 

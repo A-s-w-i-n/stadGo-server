@@ -9,8 +9,6 @@ const userRepository = UserRepositoryImpl(db);
 
 export const Login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  console.log(req.body);
-
   try {
     const LoginCheck = await login(userRepository)(email, password);
     if (LoginCheck) {

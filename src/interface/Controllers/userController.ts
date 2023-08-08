@@ -13,7 +13,7 @@ const userRepository = UserRepositoryImpl(db);
 export const userSignController = async (req: Request, res: Response) => {
   const { firstname, lastname, username, email, phone, password, isGoogle } =
     req.body;
-  console.log(req.body);
+
   const premium = false;
   const isblocked = false;
 
@@ -42,3 +42,4 @@ export const userSignController = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+

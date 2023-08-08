@@ -6,10 +6,9 @@ import { Login } from "../Controllers/userLoginController";
 const userRouter = Router()
 
 userRouter.get('/',(req,res)=>{console.log("working");res.json({status:true})})
-
 userRouter.post('/userRegister',userSignController)
-
 userRouter.post('/login',Login)
-userRouter.post('/Glogin',)
+
+
 
 export default userRouter;
