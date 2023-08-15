@@ -14,3 +14,4 @@ export const fetchStadium = (stadiumRepo : stadiumRepository)=> async (email : s
     }
     return stadiumFetch
 }
+

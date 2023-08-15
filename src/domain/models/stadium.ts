@@ -1,4 +1,5 @@
 export interface stadium {
+    _id ?: string
     stadiumname : string
     maxcapacity : string
     sportstype : string
@@ -8,6 +9,6 @@ export interface stadium {
     image  : string[]
     discription : string
     location : string
-    email : string
+    email ? : string
 
 }    

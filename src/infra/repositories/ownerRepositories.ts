@@ -71,9 +71,6 @@ export const OwnerRepositoryImpl = (
       
     }
     return  result
-
-    
-
   };
 
   return {

@@ -11,3 +11,9 @@ export interface User {
     isGoogle :boolean;
     // profileImg ?: string 
 }
+
+export interface OTPuser {
+    Email : string,
+    otp : string
+    otpStatus ?: boolean
+}

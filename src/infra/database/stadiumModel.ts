@@ -8,6 +8,7 @@ import { stadium } from "../../domain/models/stadium";
 export type MongoDBStadium = Model<Document&stadium>
 
 const stadiumSchema = new Schema<stadium>({
+    
     stadiumname : {
         type : "string",
         required :true
@@ -46,7 +47,7 @@ const stadiumSchema = new Schema<stadium>({
     },
     email : {
         type : "string",
-        required : true
+        
     }
 })
 export const stadiumModel   : MongoDBStadium = mongoose.connection.model<Document&stadium>("stadium",stadiumSchema)

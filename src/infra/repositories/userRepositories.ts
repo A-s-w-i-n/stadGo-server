@@ -9,19 +9,22 @@ export type userRepository = {
   findUser: () => Promise<User[]>;
   blockUsers(id: string): Promise<User | updateRes | void>;
   unblcokuser(id: string): Promise<User | void | updateRes>;
+  updatePremium(emai: string): Promise<User | void | updateRes>;
+  userFetch(emai: string): Promise<User | null>;
 };
 
 export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
+  
   const findByEmail = async (email: string): Promise<User | null> => {
     const user = await UserModel.findOne({ email });
+    console.log("user:",user);
+    
     return user ? user.toObject() : null;
   };
 
   const create = async (user: User): Promise<User> => {
-    
-
     const createUser = await UserModel.create(user);
-   
+
     return createUser.toObject();
   };
   const findUser = async (): Promise<User[]> => {
@@ -30,13 +33,11 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
     return adminUsersFetch;
   };
   const blockUsers = async (id: string): Promise<User | void | updateRes> => {
-    
-
     const result = await userModel.updateOne(
       { _id: id },
       { $set: { isblocked: true } }
     );
-    if (result.matchedCount > 0) { 
+    if (result.matchedCount > 0) {
       return result;
     }
   };
@@ -45,10 +46,27 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
       { _id: id },
       { $set: { isblocked: false } }
     );
-   
+
     if (result.matchedCount > 0) {
       return result;
     }
+  };
+  const updatePremium = async (
+    email: string
+  ): Promise<User | void | updateRes> => {
+    const result = await userModel.updateOne(
+      { email: email },
+      { $set: { premium: true } }
+    );
+
+    if (result.matchedCount > 0) {
+      return result;
+    }
+  };
+  const userFetch = async (email: string): Promise<User | null> => {
+    const result = await userModel.findOne({ email });
+
+    return result;
   };
   return {
     findByEmail,
@@ -56,5 +74,7 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
     findUser,
     blockUsers,
     unblcokuser,
+    updatePremium,
+    userFetch,
   };
 };

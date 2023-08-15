@@ -13,4 +13,6 @@ adminRouter.post('/unBlockUser',unBlockUser)
 adminRouter.get('/fetchOwner',fetchOnwerdata)
 adminRouter.post('/blockOwner', blockOwner)
 adminRouter.post('/unBlockOwner',unBlockOwner)
+
+
 export default adminRouter

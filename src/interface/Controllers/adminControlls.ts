@@ -44,7 +44,6 @@ export const blockUser = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(500).json({ message: "internal server error" });
-    console.log(error);
   }
 };
 export const unBlockUser = async (req: Request, res: Response) => {
@@ -59,7 +58,6 @@ export const unBlockUser = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(500).json({ message: "internal server error" });
-    console.log(error);
   }
 };
 
@@ -74,7 +72,6 @@ export const fetchOnwerdata = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(500).json({ message: "internal server error" });
-    console.log(error);
   }
 };
 export const blockOwner = async (req: Request, res: Response) => {
@@ -89,7 +86,6 @@ export const blockOwner = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(500).json({ message: "internal server error" });
-    console.log(error);
   }
 };
 export const unBlockOwner = async (req: Request, res: Response) => {
@@ -104,6 +100,5 @@ export const unBlockOwner = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(500).json({ message: "internal server error" });
-    console.log(error);
   }
 };

@@ -21,7 +21,7 @@ export const fetchOnwer = async (req:Request,res:Response)=>{
             res.json({failed : "data fetch failed",})
         }
     } catch (error) {
-        res.json(500).json({error : "internal server errror"})
+        res.status(500).json({error : "internal server errror"})
         
     }
 }

@@ -39,7 +39,5 @@ export const userSignController = async (req: Request, res: Response) => {
     }
   } catch {
     res.status(500).json({ message: "internal server error" });
-    console.log(error);
   }
 };
-
