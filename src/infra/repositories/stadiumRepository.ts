@@ -2,12 +2,17 @@ import { type } from "os";
 import { stadium } from "../../domain/models/stadium";
 import { MongoDBStadium } from "../database/stadiumModel";
 import { ObjectId } from "bson";
+import { updateRes } from "../../domain/models/update";
 
 export type stadiumRepository = {
   create: (stadium: stadium) => Promise<stadium>;
   findStadiumByEmail: (email: string) => Promise<stadium[]>;
   findStadiumList: () => Promise<stadium[]>;
   findStadiumById: (id: string) => Promise<stadium | null>;
+  uplodeVideo: (
+    id: string,
+    uplodeVideo: string
+  ) => Promise<stadium | updateRes | undefined>;
 };
 
 export const stadiumRepositoryImpl = (
@@ -28,17 +33,34 @@ export const stadiumRepositoryImpl = (
   };
   const findStadiumById = async (id: string): Promise<stadium | null> => {
     const objectID = new ObjectId(id);
-    console.log(objectID);
 
     const detaildView = await stadiumModel.findOne({ _id: objectID });
-    console.log(detaildView);
 
     return detaildView;
   };
+
+  const uplodeVideo = async (
+    id: string,
+    uplodeVideo: string
+  ): Promise<stadium | updateRes | undefined> => {
+    const objectID = new ObjectId(id);
+
+    const videoUplodes = await stadiumModel.updateOne(
+      { _id: objectID },
+      { $set: { video: uplodeVideo } }
+    );
+    console.log(videoUplodes);
+
+    if (videoUplodes.modifiedCount > 0) {
+      return videoUplodes;
+    }
+  };
+  
   return {
     create,
     findStadiumByEmail,
     findStadiumList,
     findStadiumById,
+    uplodeVideo,
   };
 };

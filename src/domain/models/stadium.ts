@@ -10,5 +10,6 @@ export interface stadium {
     discription : string
     location : string
     email ? : string
+    video ? : string
 
 }    

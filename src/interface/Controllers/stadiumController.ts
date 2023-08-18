@@ -3,7 +3,11 @@ import { stadiumModel } from "../../infra/database/stadiumModel";
 import { addStadium } from "../../app/usecases/stadium/stadiumDetails";
 import { stadiumRepositoryImpl } from "../../infra/repositories/stadiumRepository";
 import { fetchStadium } from "../../app/usecases/stadium/fetchStadiumData";
-import { fetchDetaildView, fetchStadiumList } from "../../app/usecases/stadium/fetchStadiumList";
+import {
+  fetchDetaildView,
+  fetchStadiumList,
+} from "../../app/usecases/stadium/fetchStadiumList";
+import { updateVideo } from "../../app/usecases/stadium/videoUplode";
 
 const db = stadiumModel;
 const stadiumRepository = stadiumRepositoryImpl(db);
@@ -72,19 +76,37 @@ export const stadiumList = async (req: Request, res: Response) => {
   }
 };
 
-export const stadiumDetaildView = async (req:Request,res : Response)=>{
+export const stadiumDetaildView = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.body;
 
-  try{
-    const {id} = req.body
-    
-    const fetchDetails =await  fetchDetaildView(stadiumRepository)(id)
+    const fetchDetails = await fetchDetaildView(stadiumRepository)(id);
 
-    if(fetchDetails){
-      res.status(200).json({success : "data fetch successfully",fetchDetails})
-    }else{
-      res.json({fail : "data fecthing failed"})
+    if (fetchDetails) {
+      res
+        .status(200)
+        .json({ success: "data fetch successfully", fetchDetails });
+    } else {
+      res.json({ fail: "data fecthing failed" });
     }
-  }catch{
-    res.status(500).json({error : "internal server error"})
+  } catch {
+    res.status(500).json({ error: "internal server error" });
   }
-}
+};
+export const updateVideoUplode = async (req: Request, res: Response) => {
+  try {
+    const { id, uplodeVideo } = req.body;
+    console.log(id);
+
+    const uplode = await updateVideo(stadiumRepository)(id, uplodeVideo);
+
+    if (uplode) {
+      console.log("here");
+      res.status(200).json({ success: "video uplode sucess", status: true });
+    } else {
+      res.json({ falied: "video uplode failed" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "internal server error" });
+  }
+};

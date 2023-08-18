@@ -48,6 +48,9 @@ const stadiumSchema = new Schema<stadium>({
     email : {
         type : "string",
         
+    },
+    video :{
+        type : "string"
     }
 })
 export const stadiumModel   : MongoDBStadium = mongoose.connection.model<Document&stadium>("stadium",stadiumSchema)
