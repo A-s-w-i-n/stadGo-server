@@ -47,6 +47,10 @@ const ownerSchema = new Schema<Owner>({
     type: "boolean",
     default: false,
   },
+  role: {
+    type: "string",
+    default: "owner",
+  },
   // profileImg : {
   //     type : 'string',
   // }

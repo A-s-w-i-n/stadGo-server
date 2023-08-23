@@ -13,7 +13,10 @@ export type stadiumRepository = {
     id: string,
     uplodeVideo: string
   ) => Promise<stadium | updateRes | undefined>;
+  
+  editStadium(id:string,sportstype:string,fromdate:string,todate:string,price:string,discription:string):Promise<stadium | void | updateRes>
 };
+
 
 export const stadiumRepositoryImpl = (
   stadiumModel: MongoDBStadium
@@ -49,18 +52,22 @@ export const stadiumRepositoryImpl = (
       { _id: objectID },
       { $set: { video: uplodeVideo } }
     );
-    console.log(videoUplodes);
 
     if (videoUplodes.modifiedCount > 0) {
       return videoUplodes;
     }
   };
-  
+
+  const editStadium = async (id:string,sportstype:string,fromdate:string,todate:string,price:string,discription:string):Promise<stadium|void|updateRes>=>{
+    const result = await stadiumModel.updateOne({id : id},{$set:{sportstype ,fromdate,todate,price,discription}})
+  }
+
   return {
     create,
     findStadiumByEmail,
     findStadiumList,
     findStadiumById,
     uplodeVideo,
+    editStadium
   };
 };

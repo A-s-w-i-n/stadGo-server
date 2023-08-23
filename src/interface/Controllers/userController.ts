@@ -4,7 +4,10 @@ import { UserRepositoryImpl } from "../../infra/repositories/userRepositories";
 import { signupUser } from "../../app/usecases/user/signupUser";
 import { generateAccessToken } from "../../utils/jwtAuthentication";
 import { login } from "../../app/usecases/user/loginUser";
-import { error } from "console";
+import {
+  fecthUserImage,
+  userUpdateImg,
+} from "../../app/usecases/user/profileImg";
 
 const db = userModel;
 
@@ -16,6 +19,7 @@ export const userSignController = async (req: Request, res: Response) => {
 
   const premium = false;
   const isblocked = false;
+  const role = "user";
 
   try {
     const Guser = await login(userRepository)(email, password);
@@ -29,7 +33,8 @@ export const userSignController = async (req: Request, res: Response) => {
         isblocked,
         premium,
         phone,
-        isGoogle
+        isGoogle,
+        role
       );
       res.status(201).json({ message: "data found", user });
     } else if (isGoogle == true) {
@@ -39,5 +44,40 @@ export const userSignController = async (req: Request, res: Response) => {
     }
   } catch {
     res.status(500).json({ message: "internal server error" });
+  }
+};
+export const updateImageControll = async (req: Request, res: Response) => {
+  try {
+    const { id, url } = req.body;
+    console.log(req.body);
+
+    const uplodeImg = await userUpdateImg(userRepository)(id, url);
+    if (uplodeImg) {
+      console.log(uplodeImg,"result");
+      
+      res.status(200).json({ succes: " profile image  uplode success",uplodeImg });
+    } else {
+      res.json({ faile: "profile image uplode fail" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "internal server error" });
+  }
+};
+export const findProfileImg = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.body;
+    console.log(req.body);
+
+    const findImg = await fecthUserImage(userRepository)(id);
+
+    if (findImg) {
+      console.log(findImg,"finding");
+      
+      res.status(200).json({ message: "image fetch success", findImg });
+    } else {
+      res.json("image fetch faild");
+    }
+  } catch (error) {
+    res.status(500).json({ error: "internal server error" });
   }
 };

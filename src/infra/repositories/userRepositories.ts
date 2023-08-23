@@ -2,6 +2,7 @@ import mongoose, { Model, Document } from "mongoose";
 import { User } from "../../domain/models/user";
 import { MongoDBUser, userModel } from "../database/userModel";
 import { updateRes } from "../../domain/models/update";
+import { ObjectId } from "bson";
 
 export type userRepository = {
   findByEmail: (email: string) => Promise<User | null>;
@@ -11,14 +12,15 @@ export type userRepository = {
   unblcokuser(id: string): Promise<User | void | updateRes>;
   updatePremium(emai: string): Promise<User | void | updateRes>;
   userFetch(emai: string): Promise<User | null>;
+  updataProfile(id: string, url: string): Promise<User | updateRes | void | null>;
+  findProfileImg(id: string): Promise<User | null>;
 };
 
 export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
-  
   const findByEmail = async (email: string): Promise<User | null> => {
     const user = await UserModel.findOne({ email });
-    console.log("user:",user);
-    
+    console.log("user:", user);
+
     return user ? user.toObject() : null;
   };
 
@@ -68,6 +70,29 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
 
     return result;
   };
+  const updataProfile = async (
+    id: string,
+    url: string
+  ): Promise<User | updateRes | null | void> => {
+    const objectId = new ObjectId(id);
+    console.log(objectId);
+
+    const result = await userModel.findOneAndUpdate(
+      { _id: objectId },
+      { $set: { profileImg: url } }
+    );
+    if(result){
+      return result;
+    }
+
+  };
+  const findProfileImg = async (id: string): Promise<User | null> => {
+    const objectId = new ObjectId(id);
+
+    const result = await userModel.findOne({ _id: objectId });
+
+    return result;
+  };
   return {
     findByEmail,
     create,
@@ -76,5 +101,7 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
     unblcokuser,
     updatePremium,
     userFetch,
+    updataProfile,
+    findProfileImg,
   };
 };

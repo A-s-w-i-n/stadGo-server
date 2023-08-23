@@ -9,18 +9,16 @@ const userRepository = UserRepositoryImpl(db);
 
 export const Login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  console.log("aswinn");
-  
-  
+
   try {
     const LoginCheck = await login(userRepository)(email, password);
-    if (LoginCheck) {  
+    if (LoginCheck) {
       const { _id, username } = JSON.parse(JSON.stringify(LoginCheck));
-      console.log("hllloooo aswinn");
       const accessToken = generateAccessToken(_id, username);
-      console.log("loginnnnn aswinn");
-      
-      res.status(200).json({ message: "login successfull", LoginCheck, accessToken });
+
+      res
+        .status(200)
+        .json({ message: "login successfull", LoginCheck, accessToken });
     } else {
       res.json({ message: "email or password  not valid" });
     }

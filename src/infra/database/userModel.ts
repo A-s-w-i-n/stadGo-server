@@ -42,6 +42,13 @@ const userSchema = new Schema<User>({
     type: "boolean",
     default: false,
   },
+  role: {
+    type: "string",
+    default: "user",
+  },
+  profileImg: {
+    type: "string",
+  },
 });
 
 export const userModel: MongoDBUser = mongoose.connection.model<

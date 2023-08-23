@@ -21,6 +21,7 @@ export const ownerSignUpController = async (req: Request, res: Response) => {
 
   const premium = false;
   const isblocked = false;
+  const role = "owner";
   try {
     const owner = await signUpOwner(ownerRepository)(
       firstname,
@@ -32,7 +33,8 @@ export const ownerSignUpController = async (req: Request, res: Response) => {
       phone,
       location,
       isblocked,
-      premium
+      premium,
+      role
     );
 
     res.status(201).json({ messgae: "data found", owner });

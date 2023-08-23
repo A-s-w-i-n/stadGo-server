@@ -8,6 +8,8 @@ import {
   fetchStadiumList,
 } from "../../app/usecases/stadium/fetchStadiumList";
 import { updateVideo } from "../../app/usecases/stadium/videoUplode";
+import mongoose from "mongoose";
+import { editStadiumDetail } from "../../app/usecases/stadium/editStadium";
 
 const db = stadiumModel;
 const stadiumRepository = stadiumRepositoryImpl(db);
@@ -24,8 +26,10 @@ export const stadiumController = async (req: Request, res: Response) => {
     discription,
     location,
     email,
+    id,
   } = req.body;
 
+  const newId = new mongoose.Types.ObjectId(id);
   try {
     const Stadium = addStadium(stadiumRepository)(
       stadiumname,
@@ -37,7 +41,8 @@ export const stadiumController = async (req: Request, res: Response) => {
       image,
       discription,
       location,
-      email
+      email,
+      newId
     );
 
     res.status(200).json({ message: "stadium added", Stadium });
@@ -96,12 +101,10 @@ export const stadiumDetaildView = async (req: Request, res: Response) => {
 export const updateVideoUplode = async (req: Request, res: Response) => {
   try {
     const { id, uplodeVideo } = req.body;
-    console.log(id);
 
     const uplode = await updateVideo(stadiumRepository)(id, uplodeVideo);
 
     if (uplode) {
-      console.log("here");
       res.status(200).json({ success: "video uplode sucess", status: true });
     } else {
       res.json({ falied: "video uplode failed" });
@@ -110,3 +113,18 @@ export const updateVideoUplode = async (req: Request, res: Response) => {
     res.status(500).json({ error: "internal server error" });
   }
 };
+export const stadiumEdit = async(req:Request,res:Response)=>{
+  try {
+    const {id,sportstype,fromdate,todate,price,discription}=req.body
+
+    const edit = await editStadiumDetail(stadiumRepository)(id,sportstype,fromdate,todate,price,discription)
+
+    if(edit){
+      res.status(200).json({success : "stadium details updated successFully"})
+    }else{
+      res.json({failed : "edit update details failed"})
+    }
+  } catch (error) {
+    res.status(500).json({error : "internal server error"})
+  }
+}
