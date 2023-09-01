@@ -31,13 +31,15 @@ export const messageRepositoryImpl = (
       content,
       chat: new mongoose.Types.ObjectId(chatId),
     };
+    console.log("message sending"); 
+    
     let message = await messageModel.create(newChat);
 
-    // message = await message.populate('user','_id firstname lastname username ')
-    // message = await message.populate('owner','_id firstname lastname ownername')
-    // message = await message.populate('chat')
-    // message = await message.populate('chat.user')
-    // message = await message.populate('chat.owner')
+    message = await message.populate('User','_id firstname lastname username ')
+    message = await message.populate('Owner','_id firstname lastname ownername')
+    message = await message.populate('chat')
+    message = await message.populate('chat.User')
+    message = await message.populate('chat.Owner')
 
     await chatModel.updateOne(
       { _id: new mongoose.Types.ObjectId(chatId) },
@@ -59,19 +61,19 @@ export const messageRepositoryImpl = (
     let message = await messageModel.create(newChat);
     console.log(message, "jjjj");
 
-    // message = await message.populate('user','_id firstname lastname username ')
-    // message = await message.populate('owner','_id firstname lastname ownername')
-    // message = await message.populate('chat')
-    // message = await message.populate('chat.user')
-    // message = await message.populate('chat.owner')
+    message = await message.populate('User','_id firstname lastname username ')
+    message = await message.populate('Owner','_id firstname lastname ownername')
+    message = await message.populate('chat')
+    message = await message.populate('chat.User')
+    message = await message.populate('chat.Owner')
 
     return message;
   };
   const findMessageByChatId = async (chatId: string): Promise<message[]> => {
     const message = await messageModel.find({
       chat: new mongoose.Types.ObjectId(chatId),
-    });
-    // populate('user','firstname lastname username').populate('owner','owner','firstname lastname ownername').populate('chat')
+    }).
+    populate('User','firstname lastname username').populate('Owner','firstname lastname ownername').populate('chat')
 
     return message;
   };

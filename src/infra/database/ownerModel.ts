@@ -58,4 +58,4 @@ const ownerSchema = new Schema<Owner>({
 
 export const ownerModel: MongoDBOwner = mongoose.connection.model<
   Document & Owner
->("owner", ownerSchema);
+>("Owner", ownerSchema);

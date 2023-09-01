@@ -7,6 +7,7 @@ import {
   fetchDetaildView,
   fetchStadiumList,
 } from "../../app/usecases/stadium/fetchStadiumList";
+import { stadiumFilter } from "../../app/usecases/stadium/filterStadium";
 import { updateVideo } from "../../app/usecases/stadium/videoUplode";
 import mongoose from "mongoose";
 import { editStadiumDetail } from "../../app/usecases/stadium/editStadium";
@@ -115,14 +116,39 @@ export const updateVideoUplode = async (req: Request, res: Response) => {
 };
 export const stadiumEdit = async(req:Request,res:Response)=>{
   try {
-    const {id,sportstype,fromdate,todate,price,discription}=req.body
-
-    const edit = await editStadiumDetail(stadiumRepository)(id,sportstype,fromdate,todate,price,discription)
-
+    const {id,stadiumname,sportstype,fromdate,todate,price,discription}=req.body
+    console.log(req.body);
+    
+   
+    const edit = await editStadiumDetail(stadiumRepository)(id,stadiumname,sportstype,fromdate,todate,price,discription)
+    
+    
     if(edit){
-      res.status(200).json({success : "stadium details updated successFully"})
+      console.log(edit);
+      res.status(200).json({success : "stadium details updated successFully",edit})
     }else{
       res.json({failed : "edit update details failed"})
+    }
+
+  } catch (error) {
+    res.status(500).json({error : "internal server error"})
+  }
+}
+export const stadFilter =async (req : Request, res: Response)=>{
+  try {
+    const {firstValue,secondValue} = req.body
+
+    
+    
+
+    const filter = await stadiumFilter(stadiumRepository)(firstValue,secondValue)
+
+    if(filter){
+      console.log(filter,"success");
+      
+      res.status(200).json({message : "success filtering",filter:[filter]})
+    }else{
+      res.json({fail : "stadium filter failed"})
     }
   } catch (error) {
     res.status(500).json({error : "internal server error"})

@@ -7,11 +7,11 @@ const messageSchema = new Schema<message>(
   {
     User: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "User",
     },
     Owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "owner",
+      ref: "Owner",
     },
     content: {
       type: "string",
@@ -20,13 +20,14 @@ const messageSchema = new Schema<message>(
     chat: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "chat",
-    },
+    }, 
   },
   {
     timestamps: true,
-  }
+  } 
 );
 
 export const messageModel: MongoDBMessage = mongoose.connection.model<
   Document & message
 >("message", messageSchema);
+ 

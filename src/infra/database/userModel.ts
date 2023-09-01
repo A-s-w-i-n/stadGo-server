@@ -53,4 +53,4 @@ const userSchema = new Schema<User>({
 
 export const userModel: MongoDBUser = mongoose.connection.model<
   Document & User
->("user", userSchema);
+>("User", userSchema);

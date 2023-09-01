@@ -2,16 +2,15 @@ import { Response, Request, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 require("dotenv").config();
 
-const userVerifyToken = async (
+const ownerVerifyToken = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  console.log(req.headers,"headers");
-
-
-  console.log(token, "commimg");
+  // const token = req.headers.ownerAuthorization?.split(" ")[1];
+  console.log(req.headers);
+ const token = ""
+  // console.log(token, "commimgggggggggggggggggggg");
 
   console.log(process.env.JWT_SECRETE as string);
 
@@ -24,4 +23,4 @@ const userVerifyToken = async (
   } catch (error) {}
 };
 
-export default userVerifyToken;
+export default ownerVerifyToken;

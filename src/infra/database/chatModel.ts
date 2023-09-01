@@ -11,11 +11,11 @@ const chatSchema = new Schema<Chat>(
     },
     User: {
       type: mongoose.Types.ObjectId,
-      ref: "user",
+      ref: "User",
     },
     Owner: {
       type: mongoose.Types.ObjectId,
-      ref: "owner",
+      ref: "Owner",
     },
     latestMessage: {
       type: mongoose.Types.ObjectId,
@@ -25,8 +25,7 @@ const chatSchema = new Schema<Chat>(
   {
     timestamps: true,
   }
-);
-
+); 
 export const chatModel: MongoDBChat = mongoose.connection.model<
   Document & Chat
 >("chat", chatSchema);

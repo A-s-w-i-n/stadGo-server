@@ -74,6 +74,8 @@ export const sendMessage = async (req: Request, res: Response) => {
         chatId,
         user
       );
+      console.log(msg,"aaaaaaaaaaaaaaaaaaaa");
+      
       res.status(200).json({ message: "successs", msg });
     } else {
       const owner = currentId;
@@ -87,12 +89,14 @@ export const sendMessage = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ error: "internal server error" });
   }
-};
+}; 
 export const findMessageByChatId = async (req: Request, res: Response) => {
   try {
     const chatId = req.params.chatId;
 
     const messages = await getAllMessage(messageRepository)(chatId);
+    console.log(messages,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    
     res.status(200).json({ message: "success", messages });
   } catch (error) {
     res.status(500).json({ error: " internal server error" });

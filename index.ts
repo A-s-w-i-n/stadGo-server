@@ -49,8 +49,9 @@ io.on("connection",(socket: any)=>{
   console.log("socket io connected ");
 
   socket.on("setup",(userId : string)=>{
+    console.log(userId,"userid");
+    
     socket.join(userId)
-
     socket.emit("connected")
   })
 
@@ -58,29 +59,35 @@ io.on("connection",(socket: any)=>{
     socket.join(room)
     console.log("user joind to room :",room);
   })
-  socket.on('new messages',(newMessageReceived : newMessageReceived)=>{
+  socket.on('newMessage',(newMessageReceived : newMessageReceived)=>{
     console.log(newMessageReceived ,"getting");
 
-    let chat  =newMessageReceived.chat
+    let chat  =newMessageReceived.chat  
     console.log(newMessageReceived,"new message");
+    console.log("chattttttttttttttttttttttttttttttttttttttttttttttt",chat);
+    
 
     const  sender = newMessageReceived.User ? newMessageReceived.User : newMessageReceived.Owner
     console.log("sender",sender);
-    console.log("newMessageReceived in user",newMessageReceived.chat.User);
+    console.log("newMessageReceived ===========",newMessageReceived);
+    console.log(newMessageReceived.chat,"ppp");
     
-    if(sender?._id ===newMessageReceived.chat.User._id){
+    if(sender?._id === newMessageReceived.chat.User?._id){
       console.log("user is the sender");
-      socket.in(chat.Owner._id).emit('message Received',newMessageReceived)
+      console.log('fssfdddgddlllllllllllllllllllllllllllllllllllllllllllll=',chat.Owner?._id);
+      
+      socket.in(chat.Owner?._id).emit('message Received',newMessageReceived)
     }
-    if(sender?._id === newMessageReceived.chat.Owner._id){
+    if(sender?._id === newMessageReceived.chat.Owner?._id){
       console.log("owner is the sender");
-      socket.in(chat.User._id).emit("message Received",newMessageReceived)
+      console.log('Ownrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr=',chat.User?._id);
+      socket.in(chat.User?._id).emit("message Received",newMessageReceived)
     }
-    if(chat._id ===newMessageReceived.User?._id) return console.log("not a dumb");
-    socket.in(chat.User?._id).emit("new message received",newMessageReceived)
+    if(chat._id === newMessageReceived.User?._id) return console.log("not a dumb");
+    socket.in(chat.User?._id).emit("message Received",newMessageReceived)
 
-    if(chat._id === newMessageReceived.Owner?._id) return console.log("dumb ");
-    socket.in(chat.User?._id).emit('message received')
+    if(chat._id === newMessageReceived.Owner?._id) return console.log("dumb "); 
+    socket.in(chat.Owner?._id).emit('message Received',newMessageReceived)
   })
   
 })

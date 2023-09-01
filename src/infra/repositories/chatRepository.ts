@@ -19,8 +19,8 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
       const ownerid = new mongoose.Types.ObjectId(ownerId);
       const isChat = await chatModel
         .find({ $and: [{ User: userid }, { Owner: ownerid }] })
-        .populate("user", "-password")
-        .populate("owner", "-password")
+        .populate("User", "-password")
+        .populate("Owner", "-password")
         .populate("latestMessage");
 
       if (isChat.length > 0) {
@@ -33,8 +33,8 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
         };
 
         const createdChat = await chatModel.create(chatData);
-        const fullChat = await chatModel.find({ _id: createdChat._id });
-        // .populate("user").populate("owner")
+        const fullChat = await chatModel.find({ _id: createdChat._id })
+        .populate("User").populate("Owner")
         return fullChat;
       }
     } catch (error) {
@@ -46,8 +46,8 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
     try {
       const userid = new mongoose.Types.ObjectId(userId);
 
-      const chats = chatModel.find({ User: userid });
-      // .populate("owner").populate("latestMessage").sort({updatedAt : -1})
+      const chats = chatModel.find({ User: userid })
+      .populate("Owner").populate("latestMessage").sort({updatedAt : -1})
 
       return chats;
     } catch (error) {
@@ -59,8 +59,8 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
     try {
       const ownerid = new mongoose.Types.ObjectId(ownerId);
 
-      const chats = await chatModel.find({ Owner: ownerid });
-      // .populate("user","-password").populate("latestMessage").sort({updatedAt : -1})
+      const chats = await chatModel.find({ Owner: ownerid })
+      .populate("User","-password").populate("latestMessage").sort({updatedAt : -1})
 
       return chats;
     } catch (error) {

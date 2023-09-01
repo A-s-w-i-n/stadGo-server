@@ -8,15 +8,23 @@ export type stadiumRepository = {
   create: (stadium: stadium) => Promise<stadium>;
   findStadiumByEmail: (email: string) => Promise<stadium[]>;
   findStadiumList: () => Promise<stadium[]>;
+  filterStadium : (firstValue : string,secondValue : string) => Promise<stadium[]| stadium | null | undefined>
   findStadiumById: (id: string) => Promise<stadium | null>;
   uplodeVideo: (
     id: string,
     uplodeVideo: string
   ) => Promise<stadium | updateRes | undefined>;
-  
-  editStadium(id:string,sportstype:string,fromdate:string,todate:string,price:string,discription:string):Promise<stadium | void | updateRes>
-};
 
+  editStadium(
+    id: string,
+    stadiumname: string,
+    sportstype: string,
+    fromdate: string,
+    todate: string,
+    price: string,
+    discription: string
+  ): Promise<stadium | void | updateRes | null>;
+};
 
 export const stadiumRepositoryImpl = (
   stadiumModel: MongoDBStadium
@@ -58,8 +66,33 @@ export const stadiumRepositoryImpl = (
     }
   };
 
-  const editStadium = async (id:string,sportstype:string,fromdate:string,todate:string,price:string,discription:string):Promise<stadium|void|updateRes>=>{
-    const result = await stadiumModel.updateOne({id : id},{$set:{sportstype ,fromdate,todate,price,discription}})
+  const editStadium = async (
+    id: string,
+    stadiumname: string,
+    sportstype: string,
+    fromdate: string,
+    todate: string,
+    price: string,
+    discription: string
+  ): Promise<stadium | void | updateRes | null> => {
+    const result = await stadiumModel.findOneAndUpdate(
+      { id: id },
+      {
+        $set: { stadiumname, sportstype, fromdate, todate, price, discription },
+      }
+    );
+
+    return result;
+  };
+  const filterStadium = async (firstValue : string,secondValue : string) : Promise<stadium[]| stadium | null | undefined>=>{
+    console.log(firstValue,secondValue);
+    
+    const filter = await stadiumModel.findOne({$and :[{maxcapacity : {$gte :firstValue,$lte : secondValue }}]})
+
+
+    
+      return filter
+    
   }
 
   return {
@@ -68,6 +101,7 @@ export const stadiumRepositoryImpl = (
     findStadiumList,
     findStadiumById,
     uplodeVideo,
-    editStadium
+    editStadium,
+    filterStadium
   };
 };
