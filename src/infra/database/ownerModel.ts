@@ -47,6 +47,10 @@ const ownerSchema = new Schema<Owner>({
     type: "boolean",
     default: false,
   },
+  role: {
+    type: "string",
+    default: "owner",
+  },
   // profileImg : {
   //     type : 'string',
   // }
@@ -54,4 +58,4 @@ const ownerSchema = new Schema<Owner>({
 
 export const ownerModel: MongoDBOwner = mongoose.connection.model<
   Document & Owner
->("owner", ownerSchema);
+>("Owner", ownerSchema);

@@ -16,16 +16,13 @@ export const ownerLogin = async (req: Request, res: Response) => {
     if (ownerLoginCheck) {
       const { _id, username } = JSON.parse(JSON.stringify(ownerLoginCheck));
       const accessToken = generateAccessToken(_id, username);
-      res
-        .status(200)
-        .json({
-          message: "owner login successfull",
-          ownerLoginCheck,
-          accessToken,
-        });
+      res.status(200).json({
+        message: "owner login successfull",
+        ownerLoginCheck,
+        accessToken,
+      });
     }
   } catch (error) {
     res.status(500).json({ message: "internal server error" });
-    console.log(error);
   }
 };

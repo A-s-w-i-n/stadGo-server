@@ -43,11 +43,10 @@ export const ownerBlock =
 
     return blockusers;
   };
-  export const ownerUnblock =
+export const ownerUnblock =
   (ownerRepository: ownerRepository) =>
   async (id: string): Promise<Owner | updateRes | void> => {
     const ownerunblock = await ownerRepository.unblcokowner(id);
 
     return ownerunblock;
   };
-

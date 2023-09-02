@@ -12,7 +12,8 @@ export const signupUser =
     isblocked: boolean,
     premium: boolean,
     phone: string,
-    isGoogle: boolean
+    isGoogle: boolean,
+    role: string
   ): Promise<User> => {
     const newUser: User = {
       email,
@@ -24,6 +25,7 @@ export const signupUser =
       premium,
       phone,
       isGoogle,
+      role,
     };
 
     const createUser = await UserRepository.create(newUser);

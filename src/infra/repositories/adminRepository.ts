@@ -11,13 +11,7 @@ export const adminRepositoryimpl = (
   AdminModel: MongoDBAdmin
 ): adminRepository => {
   const findByEmail = async (email: string): Promise<admin | null> => {
-   
-
-    
-
     const admin = await AdminModel.findOne({ email });
-    const ad = await AdminModel.find();
-   
 
     return admin ? admin.toObject() : null;
   };
@@ -26,4 +20,3 @@ export const adminRepositoryimpl = (
     findByEmail,
   };
 };
-
