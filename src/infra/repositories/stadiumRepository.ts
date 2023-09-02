@@ -9,6 +9,7 @@ export type stadiumRepository = {
   findStadiumByEmail: (email: string) => Promise<stadium[]>;
   findStadiumList: () => Promise<stadium[]>;
   filterStadium : (firstValue : string,secondValue : string) => Promise<stadium[]| stadium | null | undefined>
+  filterLocation : (location : string)=> Promise<stadium[] | stadium | null >
   findStadiumById: (id: string) => Promise<stadium | null>;
   uplodeVideo: (
     id: string,
@@ -87,12 +88,19 @@ export const stadiumRepositoryImpl = (
   const filterStadium = async (firstValue : string,secondValue : string) : Promise<stadium[]| stadium | null | undefined>=>{
     console.log(firstValue,secondValue);
     
-    const filter = await stadiumModel.findOne({$and :[{maxcapacity : {$gte :firstValue,$lte : secondValue }}]})
+    const filter = await stadiumModel.find({$and :[{maxcapacity : {$gte :firstValue,$lte : secondValue }}]})
 
 
     
       return filter
     
+  }
+  const filterLocation = async (location : string) : Promise<stadium[] | stadium | null > =>{
+    const filter  = await stadiumModel.find({location : location})
+
+    
+      return filter
+  
   }
 
   return {
@@ -102,6 +110,7 @@ export const stadiumRepositoryImpl = (
     findStadiumById,
     uplodeVideo,
     editStadium,
-    filterStadium
+    filterStadium,
+    filterLocation
   };
 };
