@@ -19,7 +19,6 @@ export type userRepository = {
 export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
   const findByEmail = async (email: string): Promise<User | null> => {
     const user = await UserModel.findOne({ email });
-    console.log("user:", user);
 
     return user ? user.toObject() : null;
   };
@@ -75,8 +74,6 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
     url: string
   ): Promise<User | updateRes | null | void> => {
     const objectId = new ObjectId(id);
-    console.log(objectId);
-
     const result = await userModel.findOneAndUpdate(
       { _id: objectId },
       { $set: { profileImg: url } }

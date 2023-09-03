@@ -6,10 +6,13 @@ import { updateRes } from "../../domain/models/update";
 
 export type stadiumRepository = {
   create: (stadium: stadium) => Promise<stadium>;
-  findStadiumByEmail: (email: string) => Promise<stadium[]>;
+  findStadiumByEmail: (email: string) => Promise<stadium[] | null>;
   findStadiumList: () => Promise<stadium[]>;
-  filterStadium : (firstValue : string,secondValue : string) => Promise<stadium[]| stadium | null >
-  filterLocation : (location : string)=> Promise<stadium[] | stadium | null >
+  filterStadium: (
+    firstValue: string,
+    secondValue: string
+  ) => Promise<stadium[] | stadium | null>;
+  filterLocation: (location: string) => Promise<stadium[] | stadium | null>;
   findStadiumById: (id: string) => Promise<stadium | null>;
   uplodeVideo: (
     id: string,
@@ -35,9 +38,9 @@ export const stadiumRepositoryImpl = (
 
     return addStadium;
   };
-  const findStadiumByEmail = async (email: string): Promise<stadium[]> => {
+  const findStadiumByEmail = async (email: string): Promise<stadium[] | null> => {
     const fetchStadiumData = await stadiumModel.find({ email });
-    return fetchStadiumData;
+    return fetchStadiumData ? fetchStadiumData : null;
   };
   const findStadiumList = async (): Promise<stadium[]> => {
     const stadiumList = await stadiumModel.find();
@@ -76,8 +79,7 @@ export const stadiumRepositoryImpl = (
     price: string,
     discription: string
   ): Promise<stadium | void | updateRes | null> => {
-
-    const objectID = new ObjectId(id)
+    const objectID = new ObjectId(id);
     const result = await stadiumModel.findOneAndUpdate(
       { _id: objectID },
       {
@@ -87,23 +89,23 @@ export const stadiumRepositoryImpl = (
 
     return result;
   };
-  const filterStadium = async (firstValue : string,secondValue : string) : Promise<stadium[]| stadium | null >=>{
-    console.log(firstValue,secondValue);
-    
-    const filter = await stadiumModel.find({$and :[{maxcapacity : {$gte :firstValue,$lte : secondValue }}]})
+  const filterStadium = async (
+    firstValue: string,
+    secondValue: string
+  ): Promise<stadium[] | stadium | null> => {
+    const filter = await stadiumModel.find({
+      $and: [{ maxcapacity: { $gte: firstValue, $lte: secondValue } }],
+    });
 
+    return filter;
+  };
+  const filterLocation = async (
+    location: string
+  ): Promise<stadium[] | stadium | null> => {
+    const filter = await stadiumModel.find({ location: location });
 
-    
-      return filter
-    
-  }
-  const filterLocation = async (location : string) : Promise<stadium[] | stadium | null > =>{
-    const filter  = await stadiumModel.find({location : location})
-
-    
-      return filter
-  
-  }
+    return filter;
+  };
 
   return {
     create,
@@ -113,6 +115,6 @@ export const stadiumRepositoryImpl = (
     uplodeVideo,
     editStadium,
     filterStadium,
-    filterLocation
+    filterLocation,
   };
 };

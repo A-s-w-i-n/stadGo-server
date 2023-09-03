@@ -8,9 +8,10 @@ const ownerVerifyToken = async (
   next: NextFunction
 ) => {
   // const token = req.headers.ownerAuthorization?.split(" ")[1];
-  console.log(req.headers);
+  // console.log(req.headers);
  const token = ""
-  // console.log(token, "commimgggggggggggggggggggg");
+//  req.headers.ownerAuthorization?.split("")[1]
+  console.log(token, "commimgggggggggggggggggggg");
 
   console.log(process.env.JWT_SECRETE as string);
 
