@@ -8,7 +8,7 @@ export type stadiumRepository = {
   create: (stadium: stadium) => Promise<stadium>;
   findStadiumByEmail: (email: string) => Promise<stadium[]>;
   findStadiumList: () => Promise<stadium[]>;
-  filterStadium : (firstValue : string,secondValue : string) => Promise<stadium[]| stadium | null | undefined>
+  filterStadium : (firstValue : string,secondValue : string) => Promise<stadium[]| stadium | null >
   filterLocation : (location : string)=> Promise<stadium[] | stadium | null >
   findStadiumById: (id: string) => Promise<stadium | null>;
   uplodeVideo: (
@@ -76,8 +76,10 @@ export const stadiumRepositoryImpl = (
     price: string,
     discription: string
   ): Promise<stadium | void | updateRes | null> => {
+
+    const objectID = new ObjectId(id)
     const result = await stadiumModel.findOneAndUpdate(
-      { id: id },
+      { _id: objectID },
       {
         $set: { stadiumname, sportstype, fromdate, todate, price, discription },
       }
@@ -85,7 +87,7 @@ export const stadiumRepositoryImpl = (
 
     return result;
   };
-  const filterStadium = async (firstValue : string,secondValue : string) : Promise<stadium[]| stadium | null | undefined>=>{
+  const filterStadium = async (firstValue : string,secondValue : string) : Promise<stadium[]| stadium | null >=>{
     console.log(firstValue,secondValue);
     
     const filter = await stadiumModel.find({$and :[{maxcapacity : {$gte :firstValue,$lte : secondValue }}]})

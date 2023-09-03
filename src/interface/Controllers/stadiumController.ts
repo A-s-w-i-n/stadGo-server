@@ -128,7 +128,9 @@ export const stadiumEdit = async (req: Request, res: Response) => {
       price,
       discription,
     } = req.body;
-    console.log(req.body);
+    console.log(id,"ddddddddddddd");
+    
+    console.log(req.body,'ddddddddddddddd');
 
     const edit = await editStadiumDetail(stadiumRepository)(
       id,
@@ -164,7 +166,7 @@ export const stadFilter = async (req: Request, res: Response) => {
     if (filter) {
       console.log(filter, "success");
 
-      res.status(200).json({ message: "success filtering", filter: [filter] });
+      res.status(200).json({ message: "success filtering",  filter });
     } else {
       res.json({ fail: "stadium filter failed" });
     }
