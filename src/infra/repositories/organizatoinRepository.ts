@@ -16,7 +16,8 @@ export const orgRepositroryImpl = (
   };
   const findByEmail = async (email: string): Promise<Org | null> => {
     const findOrgDetail = await orgModel.findOne({ email });
-    return findOrgDetail;
+    console.log(findOrgDetail);
+    return findOrgDetail ? findOrgDetail : null;
   };
   return {
     create,

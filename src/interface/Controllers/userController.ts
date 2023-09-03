@@ -49,11 +49,9 @@ export const userSignController = async (req: Request, res: Response) => {
 export const updateImageControll = async (req: Request, res: Response) => {
   try {
     const { id, url } = req.body;
-    console.log(req.body);
 
     const uplodeImg = await userUpdateImg(userRepository)(id, url);
     if (uplodeImg) {
-      console.log(uplodeImg,"result");
       
       res.status(200).json({ succes: " profile image  uplode success",uplodeImg });
     } else {
@@ -66,12 +64,10 @@ export const updateImageControll = async (req: Request, res: Response) => {
 export const findProfileImg = async (req: Request, res: Response) => {
   try {
     const { id } = req.body;
-    console.log(req.body);
 
     const findImg = await fecthUserImage(userRepository)(id);
 
     if (findImg) {
-      console.log(findImg,"finding");
       
       res.status(200).json({ message: "image fetch success", findImg });
     } else {

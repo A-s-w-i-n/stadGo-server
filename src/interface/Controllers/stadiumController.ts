@@ -61,6 +61,8 @@ export const stadimDataFetch = async (req: Request, res: Response) => {
     const fetchStadiumData = await fetchStadium(stadiumRepository)(email);
 
     if (fetchStadiumData) {
+      console.log(fetchStadiumData);
+      
       res
         .status(200)
         .json({ sucess: "data fetch successfull", fetchStadiumData });
@@ -128,9 +130,6 @@ export const stadiumEdit = async (req: Request, res: Response) => {
       price,
       discription,
     } = req.body;
-    console.log(id,"ddddddddddddd");
-    
-    console.log(req.body,'ddddddddddddddd');
 
     const edit = await editStadiumDetail(stadiumRepository)(
       id,
@@ -143,7 +142,6 @@ export const stadiumEdit = async (req: Request, res: Response) => {
     );
 
     if (edit) {
-      console.log(edit);
       res
         .status(200)
         .json({ success: "stadium details updated successFully", edit });
@@ -164,7 +162,6 @@ export const stadFilter = async (req: Request, res: Response) => {
     );
 
     if (filter) {
-      console.log(filter, "success");
 
       res.status(200).json({ message: "success filtering",  filter });
     } else {
