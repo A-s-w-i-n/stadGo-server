@@ -12,6 +12,7 @@ import { messageRepositoryImpl } from "../../infra/repositories/messageRepositor
 import { sendingMessage } from "../../app/usecases/chat/sendMessage";
 import { ownerSendMessage } from "../../app/usecases/chat/ownerSendMessage";
 import { getAllMessage } from "../../app/usecases/chat/getMessage";
+import { chatExist } from "../../app/usecases/chat/chatRoomexist";
 
 const chatDB = chatModel;
 const chatRepository = chatRepositoryImpl(chatDB);
@@ -102,3 +103,15 @@ export const findMessageByChatId = async (req: Request, res: Response) => {
     res.status(500).json({ error: " internal server error" });
   }
 };
+export const  checkChatExist = async (req : Request , res : Response)=>{
+  try {
+    const {userId,ownerId} = req.body
+    console.log(userId,ownerId,"asdf");
+    const exist = await chatExist(chatRepository)(userId,ownerId)
+    
+    res.status(200).json({messgage : "chat room find success",exist})
+  } catch (error) {
+    res.status(500).json({error : "internal server error"})
+    
+  }
+}

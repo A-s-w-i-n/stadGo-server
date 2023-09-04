@@ -2,11 +2,13 @@ import mongoose from "mongoose";
 import { Chat } from "../../domain/models/chat";
 import { User } from "../../domain/models/user";
 import { MongoDBChat, chatModel } from "../../infra/database/chatModel";
+import { ObjectId } from "bson";
 
 export type chatRespository = {
   createChat: (userId: string, ownerId: string) => Promise<Chat[] | null>;
   getAllUserChat: (userId: string) => Promise<Chat | Chat[] | null>;
   getAllOwnersChat: (ownerId: string) => Promise<Chat | Chat[] | null>;
+  chatRoomExist : (userId  : string,ownerId  : string)=>Promise <Chat | null>
 };
 
 export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
@@ -68,10 +70,24 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
       return null;
     }
   };
+  const chatRoomExist = async (userId : string , ownerId : string) : Promise < Chat | null>=>{
+    const userid = new ObjectId(userId)
+    const ownerid = new ObjectId(ownerId)
+    const chatExist = await chatModel.findOne({$and :[{User : userid,Owner : ownerid}]})
+    console.log(chatExist);
+    
+
+    if(chatExist){
+      return chatExist ? chatExist : null
+    }else{
+      return null
+    }
+  }
 
   return {
     createChat,
     getAllUserChat,
     getAllOwnersChat,
+    chatRoomExist
   };
 };

@@ -7,21 +7,21 @@ const ownerVerifyToken = async (
   res: Response,
   next: NextFunction
 ) => {
-  // const token = req.headers.ownerAuthorization?.split(" ")[1];
-  // console.log(req.headers);
- const token = ""
-//  req.headers.ownerAuthorization?.split("")[1]
-  console.log(token, "commimgggggggggggggggggggg");
+ 
+console.log(req.headers,'owner');
 
-  console.log(process.env.JWT_SECRETE as string);
+ const token : string =(req.headers.ownerauthorization! as string).split(" ")[1]
+
 
   try {
     const data = jwt.verify(token!, process.env.JWT_SECRETE as string);
     if (data) {
+      console.log(data,'llll');
+      
       next();
-    } else {
+    } else { 
     }
   } catch (error) {}
 };
 
-export default ownerVerifyToken;
+export default ownerVerifyToken;  

@@ -7,14 +7,11 @@ const userVerifyToken = async (
   res: Response,
   next: NextFunction
 ) => {
+console.log(req.headers,"user");
+
   const token = req.headers.authorization?.split(" ")[1];
-  console.log(req.headers,"headers");
-
-
-  console.log(token, "commimg");
-
-  console.log(process.env.JWT_SECRETE as string);
-
+  console.log(token,"aa");
+  
   try {
     const data = jwt.verify(token!, process.env.JWT_SECRETE as string);
     if (data) {
