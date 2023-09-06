@@ -51,6 +51,11 @@ const ownerSchema = new Schema<Owner>({
     type: "string",
     default: "owner",
   },
+  User : [{
+    type : mongoose.Types.ObjectId,
+    unique : true,
+    ref : "User"
+  }],
   // profileImg : {
   //     type : 'string',
   // }

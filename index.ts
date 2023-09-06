@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:3000","https//:stadgo-client-side.vercel.app"],
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -34,14 +34,14 @@ app.use("/stadium", stadiumRouter);
 app.use("/chat", chatRouter);
 app.use("/message", messageRouter);
 
-const server = app.listen(3000, () => {
+const server = app.listen(3001, () => {
   console.log("server running");
 });
 
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:3000","https//:stadgo-client-side.vercel.app"],
   },
 });
 

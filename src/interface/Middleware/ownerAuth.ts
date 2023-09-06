@@ -11,6 +11,8 @@ const ownerVerifyToken = async (
 console.log(req.headers,'owner');
 
  const token : string =(req.headers.ownerauthorization! as string).split(" ")[1]
+ console.log(token);
+  
 
 
   try {

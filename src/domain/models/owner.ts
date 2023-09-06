@@ -11,4 +11,5 @@ export interface Owner {
   isblocked: boolean;
   premium: boolean;
   role: string;
+  User? : string
 }

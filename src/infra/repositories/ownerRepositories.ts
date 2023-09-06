@@ -2,6 +2,7 @@ import { Owner } from "../../domain/models/owner";
 import { MongoDBOwner, ownerModel } from "../database/ownerModel";
 import { updateRes } from "../../domain/models/update";
 import { stadium } from "../../domain/models/stadium";
+import { ObjectId } from "bson";
 
 export type ownerRepository = {
   create: (owner: Owner) => Promise<Owner>;
@@ -10,8 +11,13 @@ export type ownerRepository = {
   blockOwners(id: string): Promise<Owner | void | updateRes>;
   unblcokowner(id: string): Promise<Owner | void | updateRes>;
   updatePremium(email: string): Promise<Owner | void | updateRes>;
-  ownerFetch(email: string): Promise<Owner | null>;
-  
+  ownerFetch(email: string): Promise<Owner[]| null>;
+  ownerFetchById(id: string): Promise<Owner[] | null>;
+  userInfo(
+    userId: string,
+    ownerid: string
+  ): Promise<Owner[] | null | updateRes>;
+  userList(id: string): Promise<Owner[] | null>;
 };
 
 export const OwnerRepositoryImpl = (
@@ -64,14 +70,40 @@ export const OwnerRepositoryImpl = (
     }
   };
 
-  const ownerFetch = async (email: string): Promise<Owner | null> => {
-    const result = await ownerModel.findOne({ email });
+  const ownerFetch = async (email: string): Promise<Owner[] | null> => {
+    console.log("hiii");
+    
+    const result = await ownerModel.find({ email:email }).populate("User")
+    console.log(result,"res");
+    
 
-    if (result) {
-    }
+    
     return result;
   };
+  const ownerFetchById = async (id: string): Promise<Owner[] | null> => {
+    const objectid = new ObjectId(id);
+    const result = await ownerModel.find({ _id: objectid });
+    return result ? result : null;
+  };
 
+  const userInfo = async (
+    userId: string,
+    ownerid: string
+  ): Promise<Owner[] | null | updateRes> => {
+    console.log("getting");
+
+    const result = await ownerModel.updateMany(
+      { _id: ownerid },
+      { $push: { User: userId } }
+    );
+    return result ? result : null;
+  };
+  const userList = async (id: string): Promise<Owner[] | null> => {
+    const objectId = new ObjectId(id);
+    const result = await ownerModel.find({ _id: objectId });
+
+    return result ? result : null;
+  };
 
   return {
     findByEmail,
@@ -81,6 +113,8 @@ export const OwnerRepositoryImpl = (
     unblcokowner,
     updatePremium,
     ownerFetch,
-    
+    userInfo,
+    userList,
+    ownerFetchById,
   };
 };
