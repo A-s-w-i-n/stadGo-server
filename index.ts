@@ -34,7 +34,10 @@ app.use("/stadium", stadiumRouter);
 app.use("/chat", chatRouter);
 app.use("/message", messageRouter);
 
-const server = app.listen(3001, () => {
+
+const port = process.env.PORT || 3001;
+
+const server = app.listen(port, () => {
   console.log("server running");
 });
 
