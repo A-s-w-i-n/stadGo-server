@@ -6,7 +6,6 @@ export const userUpdateImg =
     if (UpdateImg) {
       return UpdateImg;
     }
-    return UpdateImg;
   };
 export const fecthUserImage =
   (userRepo: userRepository) => async (id: string) => {

@@ -24,7 +24,7 @@ userRouter.post("/userPremium", userPremiumController);
 userRouter.post("/fetchUsers", fetchUsersController);
 userRouter.post("/otp", otpAuthContoller);
 userRouter.post("/verifyOtp", otpVerification);
-userRouter.post("/userProfileImage",userVerifyToken, updateImageControll);
+userRouter.post("/userProfileImage", updateImageControll);
 userRouter.post("/fetchProfileImg",userVerifyToken, findProfileImg);
 
 export default userRouter;

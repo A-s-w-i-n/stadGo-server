@@ -24,16 +24,12 @@ const messageRepository = messageRepositoryImpl(messageDB);
 
 export const accessChat = async (req: Request, res: Response) => {
   try {
-    const { userId, ownerId } = req.body;
-    console.log(req.body);
-
-    if (!userId || !ownerId) {
-      res.status(400).json({ message: "internal server error" });
-    } else {
-      const isChat = await chatAccess(chatRepository)(userId, ownerId);
+    const { userId, ownerid } = req.body;
+    console.log(req.body,"kkk");
+      const isChat = await chatAccess(chatRepository)(userId, ownerid);
 
       res.status(200).json({ success: "success", isChat });
-    }
+    
   } catch (error) {
     res.status(500).json({ error: "internal server error" });
   }
@@ -105,9 +101,10 @@ export const findMessageByChatId = async (req: Request, res: Response) => {
 };
 export const  checkChatExist = async (req : Request , res : Response)=>{
   try {
-    const {userId,ownerId} = req.body
-    console.log(userId,ownerId,"asdf");
-    const exist = await chatExist(chatRepository)(userId,ownerId)
+    const {userId,ownerid} = req.body
+
+    console.log(ownerid);
+    const exist = await chatExist(chatRepository)(userId,ownerid)
     
     res.status(200).json({messgage : "chat room find success",exist})
   } catch (error) {

@@ -12,5 +12,5 @@ export const chatRouter = Router();
 chatRouter.post("/accessChat", accessChat);
 chatRouter.get("/userChat/:userId", fetchUserChat);
 chatRouter.get("/ownerChat/:ownerId", fetchOwnerChat);
-chatRouter.post('/charRoomExist',checkChatExist)
+chatRouter.post('/chatRoomExist',checkChatExist)
   

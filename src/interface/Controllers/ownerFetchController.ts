@@ -41,7 +41,7 @@ res.status(200).json({message : "fetch success",fetch})
 export const userinfo = async (req: Request, res: Response) => {
   try {
     const { userId, ownerid } = req.body;
-    console.log(req.body,"details");
+    // console.log(req.body,"details");
     
     const listUser = await userDetails(ownerRepo)(userId, ownerid);
     if (listUser) {

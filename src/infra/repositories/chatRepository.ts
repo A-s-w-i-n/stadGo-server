@@ -5,22 +5,22 @@ import { MongoDBChat, chatModel } from "../../infra/database/chatModel";
 import { ObjectId } from "bson";
 
 export type chatRespository = {
-  createChat: (userId: string, ownerId: string) => Promise<Chat[] | null>;
+  createChat: (userId: string, ownerid: string) => Promise<Chat[] | null>;
   getAllUserChat: (userId: string) => Promise<Chat | Chat[] | null>;
   getAllOwnersChat: (ownerId: string) => Promise<Chat | Chat[] | null>;
-  chatRoomExist : (userId  : string,ownerId  : string)=>Promise <Chat | null>
+  chatRoomExist: (userId: string, ownerid: string) => Promise<Chat | null>;
 };
 
 export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
   const createChat = async (
     userId: string,
-    ownerId: string
+    ownerid: string
   ): Promise<Chat[] | null> => {
     try {
       const userid = new mongoose.Types.ObjectId(userId);
-      const ownerid = new mongoose.Types.ObjectId(ownerId);
+      const ownerId = new mongoose.Types.ObjectId(ownerid);
       const isChat = await chatModel
-        .find({ $and: [{ User: userid }, { Owner: ownerid }] })
+        .find({ $and: [{ User: userid }, { Owner: ownerId }] })
         .populate("User", "-password")
         .populate("Owner", "-password")
         .populate("latestMessage");
@@ -31,12 +31,17 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
         const chatData: Chat = {
           chatName: "sender",
           User: userid,
-          Owner: ownerid,
+          Owner: ownerId,
         };
 
         const createdChat = await chatModel.create(chatData);
-        const fullChat = await chatModel.find({ _id: createdChat._id })
-        .populate("User").populate("Owner")
+        const fullChat = await chatModel
+          .find({ _id: createdChat._id })
+          .populate("User")
+          .populate("Owner");
+
+          console.log(fullChat);
+          
         return fullChat;
       }
     } catch (error) {
@@ -48,8 +53,11 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
     try {
       const userid = new mongoose.Types.ObjectId(userId);
 
-      const chats = chatModel.find({ User: userid })
-      .populate("Owner").populate("latestMessage").sort({updatedAt : -1})
+      const chats = chatModel
+        .find({ User: userid })
+        .populate("Owner")
+        .populate("latestMessage")
+        .sort({ updatedAt: -1 });
 
       return chats;
     } catch (error) {
@@ -61,8 +69,11 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
     try {
       const ownerid = new mongoose.Types.ObjectId(ownerId);
 
-      const chats = await chatModel.find({ Owner: ownerid })
-      .populate("User","-password").populate("latestMessage").sort({updatedAt : -1})
+      const chats = await chatModel
+        .find({ Owner: ownerid })
+        .populate("User", "-password")
+        .populate("latestMessage")
+        .sort({ updatedAt: -1 });
 
       return chats;
     } catch (error) {
@@ -70,24 +81,24 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
       return null;
     }
   };
-  const chatRoomExist = async (userId : string , ownerId : string) : Promise < Chat | null>=>{
-    const userid = new ObjectId(userId)
-    const ownerid = new ObjectId(ownerId)
-    const chatExist = await chatModel.findOne({$and :[{User : userid,Owner : ownerid}]})
+  const chatRoomExist = async (
+    userId: string,
+    ownerid: string
+  ): Promise<Chat | null> => {
+    const userid = new ObjectId(userId);
+    const ownerId = new ObjectId(ownerid);
+    const chatExist = await chatModel.findOne({
+      $and: [{ User: userid }, { Owner: ownerId }],
+    });
     console.log(chatExist);
-    
 
-    if(chatExist){
-      return chatExist ? chatExist : null
-    }else{
-      return null
-    }
-  }
+    return chatExist ? chatExist : null;
+  };
 
   return {
     createChat,
     getAllUserChat,
     getAllOwnersChat,
-    chatRoomExist
+    chatRoomExist,
   };
 };

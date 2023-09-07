@@ -48,6 +48,8 @@ export const userSignController = async (req: Request, res: Response) => {
 };
 export const updateImageControll = async (req: Request, res: Response) => {
   try {
+    console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiii');
+    
     const { id, url } = req.body;
     console.log(req.body,"llllllllllllllllllllllllllll");
     
