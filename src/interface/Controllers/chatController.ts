@@ -25,7 +25,7 @@ const messageRepository = messageRepositoryImpl(messageDB);
 export const accessChat = async (req: Request, res: Response) => {
   try {
     const { userId, ownerid } = req.body;
-    console.log(req.body,"kkk");
+    
       const isChat = await chatAccess(chatRepository)(userId, ownerid);
 
       res.status(200).json({ success: "success", isChat });
@@ -40,7 +40,7 @@ export const fetchUserChat = async (req: Request, res: Response) => {
     const userid = req.params.userId;
 
     const allChats = await getChats(chatRepository)(userid);
-    console.log(allChats, "dssssss");
+    
 
     res.json({ message: " student chat fetch success", allChats });
   } catch (error) {
@@ -50,7 +50,10 @@ export const fetchUserChat = async (req: Request, res: Response) => {
 
 export const fetchOwnerChat = async (req: Request, res: Response) => {
   try {
+    console.log(req.params.ownerId);
+    
     const ownerid = req.params.ownerId;
+
 
     const allChats = await getOwnerChats(chatRepository)(ownerid);
 
@@ -71,7 +74,6 @@ export const sendMessage = async (req: Request, res: Response) => {
         chatId,
         user
       );
-      console.log(msg,"aaaaaaaaaaaaaaaaaaaa");
       
       res.status(200).json({ message: "successs", msg });
     } else {
@@ -92,7 +94,7 @@ export const findMessageByChatId = async (req: Request, res: Response) => {
     const chatId = req.params.chatId;
 
     const messages = await getAllMessage(messageRepository)(chatId);
-    console.log(messages,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
     
     res.status(200).json({ message: "success", messages });
   } catch (error) {

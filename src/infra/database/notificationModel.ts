@@ -4,11 +4,11 @@ import { notification } from "../../domain/models/notification";
 export type MongoDBNotification = Model<Document & notification>;
 
 const notificationSchema = new Schema<notification>({
-  msg: {
-    type: "string",
-    required: true,
-  },
-  userName: {
+  // msg: {
+  //   type: "string",
+  //   required: true,
+  // },
+  username: {
     type: "string",
     required: true,
   },
@@ -18,7 +18,7 @@ const notificationSchema = new Schema<notification>({
   ownerId : {
     type  : "string",
   },
-  stadiumId : {
+  stadiumid : {
     type : "string"
   },
   request : {

@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { db } from "./src/infra/database/config";
 import userRouter from "./src/interface/Routers/userRouter";
+import notificationRouter from "./src/interface/Routers/notificationRoute";
 import ownerRouter from "./src/interface/Routers/owerRouter";
 import adminRouter from "./src/interface/Routers/adminRoute";
 import orgRouter from "./src/interface/Routers/organizationRoute";
@@ -33,6 +34,7 @@ app.use("/org", orgRouter);
 app.use("/stadium", stadiumRouter);
 app.use("/chat", chatRouter);
 app.use("/message", messageRouter);
+app.use("/notification",notificationRouter)
 
 
 const port = process.env.PORT || 3001;

@@ -3,20 +3,8 @@ import { orgRepository } from "../../../infra/repositories/organizatoinRepositor
 
 export const createOrg =
   (orgRepository: orgRepository) =>
-  async (
-    organizationname: string,
-    organizationtype: string,
-    sportstype: string,
-    country: string,
-    email: string
-  ): Promise<Org> => {
-    const newOrg: Org = {
-      organizationname,
-      organizationtype,
-      sportstype,
-      country,
-      email,
-    };
+  async (organizationname: string,organizationtype: string,sportstype: string,country: string,email: string): Promise<Org> => {
+    const newOrg: Org = {organizationname,organizationtype,sportstype,country,email};
 
     const createOrganization = await orgRepository.create(newOrg);
 

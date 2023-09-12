@@ -1,9 +1,9 @@
 export interface notification {
-    msg : string
-    userName : string
+    // msg : string
+    username : string
     userId : string
     ownerId: string
-    stadiumId : string
+    stadiumid : string
     request : boolean
 
 }

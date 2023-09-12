@@ -1,11 +1,14 @@
+import { ObjectId } from "bson";
 import { notification } from "../../domain/models/notification";
 import { updateRes } from "../../domain/models/update";
 import { MongoDBNotification } from "../database/notificationModel";
+// import mongoose from "mongoose";
 
 export type notificationRepository = {
     createNotification : (notification : notification) => Promise<notification | null>
-    updateNotification : (userId : string,id : string) => Promise<notification | null | updateRes>
-    findNotification : (userId : string,ownerId  : string,stadiumId : string) =>Promise<notification[]| null>
+    updateNotification : (ownerId : string,Id : string) => Promise<notification | null | updateRes>
+    findOwnerNotification : (ownerId  : string,stadiumId : string) =>Promise<notification[]| null>
+    findUserNotifications : (ownerId : string,stadiumId : string,userId : string) =>Promise<notification | null>
 
 }
 
@@ -14,18 +17,34 @@ export const notificationRepositoryImpl = (notificationModel : MongoDBNotificati
         const create= await notificationModel.create(notification)
         return create
     }
-    const updateNotification = async (id : string,userid : string)  : Promise<notification | null | updateRes>=>{
-        const update = await notificationModel.updateOne({$and: [{ userId: userid, }, { _id: id }]},{$set : {request : true}})
+    const updateNotification = async (ownerId: string,Id : string)  : Promise<notification | null | updateRes>=>{
+        
+        const id =new ObjectId(Id)
+        console.log(ownerId,"hhh",Id);
+        
+        const update = await notificationModel.findOneAndUpdate({$and: [{ ownerId: ownerId, }, { _id: id }]},{$set : {request : true}})
+        console.log(update,"log");
     return update ? update : null
     }
-    const findNotification = async (ownerId :string,userId : string,stadiumId : string) : Promise<notification[] | null>=>{
-        const find = await notificationModel.find({$or : [{userId :userId,stadiumId : stadiumId },{ownerId : ownerId}]})    
-        return find ? find :null
+    const findOwnerNotification = async (ownerId :string,stadiumId : string) : Promise<notification[] | null>=>{
+        const ownerid =new ObjectId(ownerId)
+        const stadiumid =new ObjectId(stadiumId)
+        const find = await notificationModel.find({$and : [{stadiumid : stadiumid },{ownerId : ownerid}]}) 
+        return find ? find : null
     }
+    const findUserNotifications = async (ownerId : string,stadiumId : string,userId : string):Promise<notification| null>=>{
 
+        const find = await notificationModel.findOne({$and:[{ownerId : ownerId},{stadiumid :stadiumId},{userId : userId}]})
+
+    
+            return find ? find : null
+        
+
+    }
     return {
         createNotification,
         updateNotification,
-        findNotification
+        findOwnerNotification,
+        findUserNotifications
     }
 }
