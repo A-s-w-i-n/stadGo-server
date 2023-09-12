@@ -14,8 +14,17 @@ const notificationSchema = new Schema<notification>({
   },
   userId: {
     type: "string",
-    required: true,
   },
+  ownerId : {
+    type  : "string",
+  },
+  stadiumId : {
+    type : "string"
+  },
+  request : {
+    type : Boolean,
+    default : false
+  }
 },{
     timestamps : true
 });
