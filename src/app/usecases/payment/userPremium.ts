@@ -4,8 +4,8 @@ import { updateRes } from "../../../domain/models/update";
 
 export const premiumUser =
   (userRepo: userRepository) =>
-  async (email: string): Promise<User | updateRes | void> => {
-    const premium = await userRepo.updatePremium(email);
+  async (stadiumId: string,orderId:string,email :string): Promise<User | updateRes | void> => {
+    const premium = await userRepo.updatePremium(stadiumId,orderId,email);
 
     return premium;
   };

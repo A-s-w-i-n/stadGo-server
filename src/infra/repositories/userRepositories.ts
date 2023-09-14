@@ -10,7 +10,7 @@ export type userRepository = {
   findUser: () => Promise<User[]>;
   blockUsers(id: string): Promise<User | updateRes | void>;
   unblcokuser(id: string): Promise<User | void | updateRes>;
-  updatePremium(emai: string): Promise<User | void | updateRes>;
+  updatePremium(stadiumId :string,orderId :string,email : string): Promise<User | void | updateRes>;
   userFetch(emai: string): Promise<User | null>;
   updataProfile(id: string, url: string): Promise<User | updateRes | void | null>;
   findProfileImg(id: string): Promise<User | null>;
@@ -53,16 +53,17 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
     }
   };
   const updatePremium = async (
-    email: string
+    stadiumId :string,orderId :string,email:string
   ): Promise<User | void | updateRes> => {
+    console.log(stadiumId,orderId,email);
+    
     const result = await userModel.updateOne(
-      { email: email },
-      { $set: { premium: true } }
+      {email : email},{$push :{ paymentDetails:{orderId : orderId,stadiumId : stadiumId}}},
     );
 
-    if (result.matchedCount > 0) {
+   
       return result;
-    }
+    
   };
   const userFetch = async (email: string): Promise<User | null> => {
     const result = await userModel.findOne({ email });
@@ -90,6 +91,7 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
 
     return result;
   };
+
   return {
     findByEmail,
     create,

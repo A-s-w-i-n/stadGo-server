@@ -26,9 +26,9 @@ export const fetchOnwer = async (req: Request, res: Response) => {
 };
 export const fetchOwnerByid = async(req: Request,res : Response)=>{
   try {
-    const {id} = req.body
+    const {ownerid} = req.body
 
-    const fetch = await fetchOwnerById(ownerRepo)(id)
+    const fetch = await fetchOwnerById(ownerRepo)(ownerid)
     if(fetch){
 res.status(200).json({message : "fetch success",fetch})
     }else{

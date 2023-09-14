@@ -50,6 +50,16 @@ const userSchema = new Schema<User>({
     type: "string",
     default : "https://o.remove.bg/downloads/f1b14daf-e2c0-4c71-bc8e-e4af56c9cdbf/profile_default_img-removebg-preview.png"
   },
+  paymentDetails: [{
+    orderId: {
+      type: String,
+      required: true,
+    },
+    stadiumId: {
+      type: String,
+      required: true,
+    },
+  }]  
 });
 
 export const userModel: MongoDBUser = mongoose.connection.model<

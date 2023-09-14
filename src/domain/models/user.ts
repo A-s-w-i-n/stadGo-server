@@ -11,6 +11,7 @@ export interface User {
   isGoogle: boolean;
   role: string;
   profileImg?: string;
+  paymentDetails?:[{orderId :string,stadiumId :string}]
 }
 
 export interface OTPuser {

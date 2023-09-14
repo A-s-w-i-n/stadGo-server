@@ -15,9 +15,9 @@ ownerRouter.get("/owner", (req, res) => {
 });
 ownerRouter.post("/ownerRegister", ownerSignUpController);
 ownerRouter.post("/ownerLogin", ownerLogin);
-ownerRouter.post("/ownerPremium", premiumController);
+ownerRouter.post("/ownerPayment", premiumController);
 ownerRouter.post("/fetchOwner", fetchOnwer);
-ownerRouter.get('/fetchOwnerById',fetchOwnerByid)
+ownerRouter.post('/fetchOwnerById',fetchOwnerByid)
 ownerRouter.post("/videoUplode",ownerVerifyToken, updateVideoUplode);
 ownerRouter.post('/userList',userVerifyToken,userinfo)
 ownerRouter.post('/userListFetch',listUser)

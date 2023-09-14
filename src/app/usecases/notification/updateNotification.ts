@@ -5,3 +5,8 @@ export const updateNotificationStatus = (notificationRepo : notificationReposito
     const update   = await notificationRepo.updateNotification(ownerId,Id)
     return update ? update : null
 }
+export const UserupdateNotification = (notificationRepo : notificationRepository)=>async(ownerId:string,userId : string)=>{
+    const update = await notificationRepo.UserupdateNotification(ownerId,userId)
+
+    return update ? update : null
+}

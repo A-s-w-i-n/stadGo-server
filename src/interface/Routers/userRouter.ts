@@ -20,7 +20,7 @@ userRouter.get("/", (req, res) => {
 });
 userRouter.post("/userRegister", userSignController);
 userRouter.post("/login", Login);
-userRouter.post("/userPremium", userPremiumController);
+userRouter.post("/userPayment", userPremiumController);
 userRouter.post("/fetchUsers", fetchUsersController);
 userRouter.post("/otp", otpAuthContoller);
 userRouter.post("/verifyOtp", otpVerification);

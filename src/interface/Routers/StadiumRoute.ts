@@ -23,5 +23,6 @@ stadiumRouter.post('/editStadium',ownerVerifyToken,stadiumEdit)
 stadiumRouter.post('/stadFilter',userVerifyToken,stadFilter)
 stadiumRouter.post('/stadiumLocationFilter',userVerifyToken,filterLocation)
 
+
 export default stadiumRouter;
   

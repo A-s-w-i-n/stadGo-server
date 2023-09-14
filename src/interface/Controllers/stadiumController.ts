@@ -90,6 +90,8 @@ export const stadiumList = async (req: Request, res: Response) => {
 export const stadiumDetaildView = async (req: Request, res: Response) => {
   try {
     const { id } = req.body;
+    console.log(id,"useridddddd");
+    
 
     const fetchDetails = await fetchDetaildView(stadiumRepository)(id);
 

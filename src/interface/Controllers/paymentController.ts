@@ -14,9 +14,9 @@ const userRepo = UserRepositoryImpl(userDB);
 
 export const premiumController = async (req: Request, res: Response) => {
   try {
-    const { email } = req.body;
+    const { stadiumId,orderId,ownerId,userId,stadiumPrice } = req.body;
 
-    const setPremium = await premiumOwner(ownerRepo)(email);
+    const setPremium = await premiumOwner(ownerRepo)(stadiumId,orderId,ownerId,userId,stadiumPrice);
 
     if (setPremium) {
       res.status(200).json({ success: "premmium updated" });
@@ -29,12 +29,14 @@ export const premiumController = async (req: Request, res: Response) => {
 };
 export const userPremiumController = async (req: Request, res: Response) => {
   try {
-    const { email } = req.body;
+    const { stadiumId,orderId,email } = req.body;
+    
+    
 
-    const setPremium = await premiumUser(userRepo)(email);
+    const setPremium = await premiumUser(userRepo)(stadiumId,orderId,email);
 
     if (setPremium) {
-      res.status(200).json({ success: "premmium updated" });
+      res.status(200).json({ success: "premmium updated",setPremium });
     } else {
       res.json({ failed: "premium is not upadated" });
     }

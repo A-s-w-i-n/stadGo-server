@@ -10,8 +10,8 @@ export const fetchOwners =
     }
     return ownerFetch;
   };
-  export const fetchOwnerById = (ownerRepo : ownerRepository)=>async (id : string)=>{
-    const fetch : Owner[] | null = await ownerRepo.ownerFetchById(id)
+  export const fetchOwnerById = (ownerRepo : ownerRepository)=>async (ownerid : string)=>{
+    const fetch : Owner[] | null = await ownerRepo.ownerFetchById(ownerid)
 
     if(fetch){
       return fetch

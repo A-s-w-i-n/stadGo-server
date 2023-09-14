@@ -10,9 +10,9 @@ export type ownerRepository = {
   findOwner: () => Promise<Owner[]>;
   blockOwners(id: string): Promise<Owner | void | updateRes>;
   unblcokowner(id: string): Promise<Owner | void | updateRes>;
-  updatePremium(email: string): Promise<Owner | void | updateRes>;
+  updatePremium(stadiumId :string,orderId:string,ownerId : string,userId : string,stadiumPrice :string): Promise<Owner | void | updateRes>;
   ownerFetch(email: string): Promise<Owner[]| null>;
-  ownerFetchById(id: string): Promise<Owner[] | null>;
+  ownerFetchById(ownerid: string): Promise<Owner[] | null>;
   userInfo(
     userId: string,
     ownerid: string
@@ -59,11 +59,12 @@ export const OwnerRepositoryImpl = (
     }
   };
   const updatePremium = async (
-    email: string
+    stadiumId :string,orderId:string,ownerId : string,userId : string,stadiumPrice:string
   ): Promise<Owner | void | updateRes> => {
+    const objectId = new ObjectId(ownerId)
     const result = await ownerModel.updateOne(
-      { email: email },
-      { $set: { premium: true } }
+      { _id: objectId },
+      { $push: { paymentDetails:{orderId : orderId,stadiumId : stadiumId,userId :userId,stadiumPrice:stadiumPrice} } }
     );
     if (result.matchedCount > 0) {
       return result;
@@ -80,8 +81,8 @@ export const OwnerRepositoryImpl = (
     
     return result;
   };
-  const ownerFetchById = async (id: string): Promise<Owner[] | null> => {
-    const objectid = new ObjectId(id);
+  const ownerFetchById = async (ownerid: string): Promise<Owner[] | null> => {
+    const objectid = new ObjectId(ownerid);
     const result = await ownerModel.find({ _id: objectid });
     return result ? result : null;
   };

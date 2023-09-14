@@ -9,6 +9,7 @@ export type notificationRepository = {
     updateNotification : (ownerId : string,Id : string) => Promise<notification | null | updateRes>
     findOwnerNotification : (ownerId  : string,stadiumId : string) =>Promise<notification[]| null>
     findUserNotifications : (ownerId : string,stadiumId : string,userId : string) =>Promise<notification | null>
+    UserupdateNotification:(ownerId: string,userId : string) =>Promise<notification | null | updateRes>
 
 }
 
@@ -20,10 +21,14 @@ export const notificationRepositoryImpl = (notificationModel : MongoDBNotificati
     const updateNotification = async (ownerId: string,Id : string)  : Promise<notification | null | updateRes>=>{
         
         const id =new ObjectId(Id)
-        console.log(ownerId,"hhh",Id);
+        
         
         const update = await notificationModel.findOneAndUpdate({$and: [{ ownerId: ownerId, }, { _id: id }]},{$set : {request : true}})
-        console.log(update,"log");
+    return update ? update : null
+    }
+    const UserupdateNotification = async (ownerId: string,userId : string)  : Promise<notification | null | updateRes>=>{
+        
+        const update = await notificationModel.findOneAndUpdate({$and: [{ ownerId: ownerId, }, { userId: userId }]},{$set : {request : false}})
     return update ? update : null
     }
     const findOwnerNotification = async (ownerId :string,stadiumId : string) : Promise<notification[] | null>=>{
@@ -45,6 +50,7 @@ export const notificationRepositoryImpl = (notificationModel : MongoDBNotificati
         createNotification,
         updateNotification,
         findOwnerNotification,
-        findUserNotifications
+        findUserNotifications,
+        UserupdateNotification
     }
 }

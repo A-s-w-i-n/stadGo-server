@@ -56,6 +56,24 @@ const ownerSchema = new Schema<Owner>({
     unique : true,
     ref : "User"
   }],
+  paymentDetails: [{
+    orderId: {
+      type: String,
+      required: true,
+    },
+    stadiumId: {
+      type: String,
+      required: true,
+    },
+    userId : {
+      type :"string",
+      required : true
+    },
+    stadiumPrice:{
+      type : "string",
+      required : true
+    }
+  }]  
   // profileImg : {
   //     type : 'string',
   // }

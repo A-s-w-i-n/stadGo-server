@@ -3,7 +3,7 @@ import { notificationModel } from "../../infra/database/notificationModel";
 import {notificationRepositoryImpl } from "../../infra/repositories/notificationRepository";
 import { createNotification } from "../../app/usecases/notification/createNotification";
 import { ownerFindNotification, userFindNotification } from "../../app/usecases/notification/findNotification";
-import { updateNotificationStatus } from "../../app/usecases/notification/updateNotification";
+import { UserupdateNotification, updateNotificationStatus } from "../../app/usecases/notification/updateNotification";
 import { responseEncoding } from "axios";
 
 const db = notificationModel
@@ -48,6 +48,20 @@ export const updateStatus = async (req : Request,res : Response)=>{
         res.status(500).json({error : "internal server error"})
     }
 }
+export const UserupdateStatus = async (req : Request,res : Response)=>{
+    const {ownerId,userId} = req.body
+    console.log(req.body,"ppp");
+    
+    
+    try {
+        const update = await UserupdateNotification(notificationRepo)(ownerId,userId)
+
+        res.status(200).json({message : "update successfull ",update})
+    } catch (error) {
+        res.status(500).json({error : "internal server error"})
+    }
+}
+
 
 export const findUserNotification = async (req : Request,res: Response)=>{
     const {ownerId,stadiumid,userId} = req.body
