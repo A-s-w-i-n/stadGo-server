@@ -12,5 +12,5 @@ export interface Owner {
   premium: boolean;
   role: string;
   User? : string
-  paymentDetails?:[{orderId :string,stadiumId :string,userId : string,stadiumPrice :string}]
+  paymentDetails?:[{orderId :string,stadiumId :string,userId : string,stadiumPrice :string,date : string,startDate : string,endDate : string}]
 }

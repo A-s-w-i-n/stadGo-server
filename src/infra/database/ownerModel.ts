@@ -67,11 +67,23 @@ const ownerSchema = new Schema<Owner>({
     },
     userId : {
       type :"string",
-      required : true
+      required : true,
     },
     stadiumPrice:{
       type : "string",
       required : true
+    },
+    date : {
+      type : "string",
+      required : true
+    },
+    startDate : {
+      type : "string",
+      required : true
+    },
+    endDate : {
+      type :"string",
+    required : true
     }
   }]  
   // profileImg : {

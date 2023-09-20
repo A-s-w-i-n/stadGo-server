@@ -59,6 +59,26 @@ const userSchema = new Schema<User>({
       type: String,
       required: true,
     },
+    stadiumPrice : {
+      type : "string",
+      required : true
+    },
+    userId : {
+      type : "string",
+      required : true
+    },
+    date :{
+      type:"string",
+      required : true
+    },
+    startDate : {
+      type : "string",
+      required : true
+    },
+    endDate : {
+      type :"string",
+    required : true
+    }
   }]  
 });
 

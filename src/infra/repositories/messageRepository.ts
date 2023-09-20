@@ -4,23 +4,11 @@ import { messageModel, MongoDBMessage } from "../database/messageModel";
 import { message } from "../../domain/models/chat";
 import { chatModel } from "../database/chatModel";
 
-export type messageRepository = {
-  sendMessage: (
-    content: string,
-    chatId: string,
-    user: string
-  ) => Promise<message>;
-  ownerSendMessage: (
-    content: string,
-    chatId: string,
-    owner: string
-  ) => Promise<message>;
+export type messageRepository = {sendMessage: (content: string,chatId: string,user: string) => Promise<message>;ownerSendMessage: (content: string,chatId: string,owner: string) => Promise<message>;
   findMessageByChatId: (chatId: string) => Promise<message[]>;
 };
 
-export const messageRepositoryImpl = (
-  messageModel: MongoDBMessage
-): messageRepository => {
+export const messageRepositoryImpl = (messageModel: MongoDBMessage): messageRepository => {
   const sendMessage = async (
     content: string,
     chatId: string,

@@ -52,8 +52,6 @@ export const updateImageControll = async (req: Request, res: Response) => {
     
     const { id, url } = req.body;
     console.log(req.body,"llllllllllllllllllllllllllll");
-    
-
     const uplodeImg = await userUpdateImg(userRepository)(id, url);
     if (uplodeImg) {
       

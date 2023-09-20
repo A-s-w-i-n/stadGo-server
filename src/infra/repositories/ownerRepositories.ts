@@ -10,7 +10,7 @@ export type ownerRepository = {
   findOwner: () => Promise<Owner[]>;
   blockOwners(id: string): Promise<Owner | void | updateRes>;
   unblcokowner(id: string): Promise<Owner | void | updateRes>;
-  updatePremium(stadiumId :string,orderId:string,ownerId : string,userId : string,stadiumPrice :string): Promise<Owner | void | updateRes>;
+  updatePremium(stadiumId :string,orderId:string,ownerId : string,userId : string,stadiumPrice :string,date:string,startDate : string ,endDate : string): Promise<Owner | void | updateRes>;
   ownerFetch(email: string): Promise<Owner[]| null>;
   ownerFetchById(ownerid: string): Promise<Owner[] | null>;
   userInfo(
@@ -59,12 +59,12 @@ export const OwnerRepositoryImpl = (
     }
   };
   const updatePremium = async (
-    stadiumId :string,orderId:string,ownerId : string,userId : string,stadiumPrice:string
+    stadiumId :string,orderId:string,ownerId : string,userId : string,stadiumPrice:string,date:string,startDate : string,endDate : string
   ): Promise<Owner | void | updateRes> => {
     const objectId = new ObjectId(ownerId)
     const result = await ownerModel.updateOne(
       { _id: objectId },
-      { $push: { paymentDetails:{orderId : orderId,stadiumId : stadiumId,userId :userId,stadiumPrice:stadiumPrice} } }
+      { $push: { paymentDetails:{orderId : orderId,stadiumId : stadiumId,userId :userId,stadiumPrice:stadiumPrice,date:date,startDate :startDate,endDate:endDate} } }
     );
     if (result.matchedCount > 0) {
       return result;

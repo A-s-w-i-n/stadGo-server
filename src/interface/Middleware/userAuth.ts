@@ -11,6 +11,8 @@ console.log(req.headers,"user");
 
   const token = req.headers.authorization?.split(" ")[1];
   try {
+    
+    console.log("llllllll");
     const data = jwt.verify(token!, process.env.JWT_SECRETE as string);
     console.log(data);
     
