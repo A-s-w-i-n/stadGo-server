@@ -29,7 +29,10 @@ export const notificationRepositoryImpl = (notificationModel : MongoDBNotificati
     const UserupdateNotification = async (ownerId: string,userId : string)  : Promise<notification | null | updateRes>=>{
         
         const update = await notificationModel.findOneAndUpdate({$and: [{ ownerId: ownerId, }, { userId: userId }]},{$set : {request : false}})
+
+        await notificationModel.deleteOne({$and: [{ ownerId: ownerId, }, { userId: userId }]},{$set : {request : false}})
     return update ? update : null
+
     }
     const findOwnerNotification = async (ownerId :string,stadiumId : string) : Promise<notification[] | null>=>{
         const ownerid =new ObjectId(ownerId)
