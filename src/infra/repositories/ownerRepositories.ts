@@ -75,16 +75,22 @@ export const OwnerRepositoryImpl = (
     const page : any = item
     const  pageSize =5
     const skipCount = (page - 1) * pageSize
-    const result = await ownerModel.find({ email:email }).populate("User").skip(skipCount).limit(pageSize)
+    console.log(skipCount,"5555");
     
+    const result = await ownerModel.find({ email:email }).populate("User")
+
+    const modifiedOwners = result.map((owner :any) => {
+      if (owner.User && owner.User.length > 0) {
+        owner.User = owner.User.slice(skipCount, skipCount + pageSize);
+      }
+      return owner;
+    });
     const userCount :any = result[0].User?.length
+    console.log(userCount);
+    
   const totalCount = Math.ceil(userCount/pageSize) 
-
-    
-    
-
-    
-    return {result,totalCount};
+  console.log(totalCount);
+    return {modifiedOwners,totalCount};
   };
   const ownerFetchById = async (ownerid: string): Promise<Owner[] | null> => {
     const objectid = new ObjectId(ownerid);
