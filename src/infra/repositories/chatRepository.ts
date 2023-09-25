@@ -40,7 +40,7 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
           .populate("User")
           .populate("Owner");
 
-          console.log(fullChat);
+        
           
         return fullChat;
       }
@@ -90,7 +90,7 @@ export const chatRepositoryImpl = (chatModel: MongoDBChat): chatRespository => {
     const chatExist = await chatModel.findOne({
       $and: [{ User: userid }, { Owner: ownerId }],
     });
-    console.log(chatExist);
+ 
 
     return chatExist ? chatExist : null;
   };

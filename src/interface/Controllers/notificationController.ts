@@ -37,7 +37,6 @@ export const findOnwerNotifications = async(req: Request,res:Response)=>{
 }
 export const updateStatus = async (req : Request,res : Response)=>{
     const {ownerId,Id} = req.body
-    console.log(req.body,"ppp");
     
     
     try {
@@ -50,7 +49,6 @@ export const updateStatus = async (req : Request,res : Response)=>{
 }
 export const UserupdateStatus = async (req : Request,res : Response)=>{
     const {ownerId,userId} = req.body
-    console.log(req.body,"ppp");
     
     
     try {
@@ -65,7 +63,6 @@ export const UserupdateStatus = async (req : Request,res : Response)=>{
 
 export const findUserNotification = async (req : Request,res: Response)=>{
     const {ownerId,stadiumid,userId} = req.body
-    console.log(req.body,"aaaa");
     
 
     try {

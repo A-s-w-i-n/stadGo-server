@@ -2,8 +2,8 @@ import { Owner } from "../../../domain/models/owner";
 import { ownerRepository } from "../../../infra/repositories/ownerRepositories";
 
 export const fetchOwners =
-  (ownerRepo: ownerRepository) => async (email: string) => {
-    const ownerFetch: Owner[] | null = await ownerRepo.ownerFetch(email);
+  (ownerRepo: ownerRepository) => async (email: string,item :string) => {
+    const ownerFetch: Owner[] | null = await ownerRepo.ownerFetch(email,item);
 
     if (ownerFetch) {
       return ownerFetch;

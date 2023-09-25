@@ -10,9 +10,9 @@ const ownerRepo = OwnerRepositoryImpl(db);
 
 export const fetchOnwer = async (req: Request, res: Response) => {
   try {
-    const { email } = req.body;
+    const { email,item } = req.body;
 
-    const ownerDetail = await fetchOwners(ownerRepo)(email);
+    const ownerDetail = await fetchOwners(ownerRepo)(email,item);
     if (ownerDetail) {
       res
         .status(200)

@@ -19,7 +19,7 @@ export const messageRepositoryImpl = (messageModel: MongoDBMessage): messageRepo
       content,
       chat: new mongoose.Types.ObjectId(chatId),
     };
-    console.log("message sending"); 
+    
     
     let message = await messageModel.create(newChat);
 
@@ -47,7 +47,7 @@ export const messageRepositoryImpl = (messageModel: MongoDBMessage): messageRepo
       chat: new mongoose.Types.ObjectId(chatId),
     };
     let message = await messageModel.create(newChat);
-    console.log(message, "jjjj");
+    
 
     message = await message.populate('User','_id firstname lastname username ')
     message = await message.populate('Owner','_id firstname lastname ownername')

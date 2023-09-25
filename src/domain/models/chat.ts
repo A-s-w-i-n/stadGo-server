@@ -9,7 +9,7 @@ export interface Chat {
   latestMessage?: mongoose.Types.ObjectId;
 }
 
-export interface message {
+export interface  message {
   User?: mongoose.Types.ObjectId;
   Owner?: mongoose.Types.ObjectId;
   content: string;

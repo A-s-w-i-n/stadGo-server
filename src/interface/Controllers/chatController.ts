@@ -50,7 +50,6 @@ export const fetchUserChat = async (req: Request, res: Response) => {
 
 export const fetchOwnerChat = async (req: Request, res: Response) => {
   try {
-    console.log(req.params.ownerId);
     
     const ownerid = req.params.ownerId;
 
@@ -65,7 +64,6 @@ export const fetchOwnerChat = async (req: Request, res: Response) => {
 export const sendMessage = async (req: Request, res: Response) => {
   try {
     const { content, chatId, currentId, currentRole } = req.body;
-    console.log(currentId, "current id");
 
     if (currentRole === "user") {
       const user = currentId;
@@ -105,7 +103,6 @@ export const  checkChatExist = async (req : Request , res : Response)=>{
   try {
     const {userId,ownerid} = req.body
 
-    console.log(ownerid);
     const exist = await chatExist(chatRepository)(userId,ownerid)
     
     res.status(200).json({messgage : "chat room find success",exist})

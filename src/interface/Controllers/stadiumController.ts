@@ -61,7 +61,6 @@ export const stadimDataFetch = async (req: Request, res: Response) => {
     const fetchStadiumData = await fetchStadium(stadiumRepository)(email);
 
     if (fetchStadiumData) {
-      console.log(fetchStadiumData);
       
       res
         .status(200)
@@ -90,7 +89,6 @@ export const stadiumList = async (req: Request, res: Response) => {
 export const stadiumDetaildView = async (req: Request, res: Response) => {
   try {
     const { id } = req.body;
-    console.log(id,"useridddddd");
     
 
     const fetchDetails = await fetchDetaildView(stadiumRepository)(id);

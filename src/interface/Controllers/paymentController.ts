@@ -15,7 +15,6 @@ const userRepo = UserRepositoryImpl(userDB);
 export const premiumController = async (req: Request, res: Response) => {
   try {
     const { stadiumId,orderId,ownerId,userId,stadiumPrice,date, startDate,endDate } = req.body;
-    console.log(req.body);
     
 
     const setPremium = await premiumOwner(ownerRepo)(stadiumId,orderId,ownerId,userId,stadiumPrice,date,startDate,endDate);
@@ -33,7 +32,6 @@ export const userPremiumController = async (req: Request, res: Response) => {
   try {
     const { stadiumId,orderId,email,stadiumPrice,userId,date,startDate,endDate} = req.body;
     
-    console.log();
     
 
     const setPremium = await premiumUser(userRepo)(stadiumId,orderId,email,stadiumPrice,userId,date,startDate,endDate);

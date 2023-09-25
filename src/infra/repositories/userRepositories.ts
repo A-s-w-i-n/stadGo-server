@@ -55,7 +55,6 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
   const updatePremium = async (
     stadiumId :string,orderId :string,email:string,stadiumPrice : string,userId : string,date : string,startDate : string,endDate : string
   ): Promise<User | void | updateRes> => {
-    console.log(stadiumId,orderId,email);
     
     const result = await userModel.updateOne(
       {email : email},{$push :{ paymentDetails:{orderId : orderId,stadiumId : stadiumId ,stadiumPrice :stadiumPrice,userId : userId,date : date,startDate :startDate,endDate:endDate}}},

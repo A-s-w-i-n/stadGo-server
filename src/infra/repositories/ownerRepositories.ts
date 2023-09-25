@@ -11,7 +11,7 @@ export type ownerRepository = {
   blockOwners(id: string): Promise<Owner | void | updateRes>;
   unblcokowner(id: string): Promise<Owner | void | updateRes>;
   updatePremium(stadiumId :string,orderId:string,ownerId : string,userId : string,stadiumPrice :string,date:string,startDate : string ,endDate : string): Promise<Owner | void | updateRes>;
-  ownerFetch(email: string): Promise<Owner[]| null>;
+  ownerFetch(email: string,item :string): Promise<Owner[]| null | any>;
   ownerFetchById(ownerid: string): Promise<Owner[] | null>;
   userInfo(
     userId: string,
@@ -19,7 +19,6 @@ export type ownerRepository = {
   ): Promise<Owner[] | null | updateRes>;
   userList(id: string): Promise<Owner[] | null>;
 };
-
 export const OwnerRepositoryImpl = (
   OwnerModel: MongoDBOwner
 ): ownerRepository => {
@@ -71,15 +70,21 @@ export const OwnerRepositoryImpl = (
     }
   };
 
-  const ownerFetch = async (email: string): Promise<Owner[] | null> => {
-    console.log("hiii");
+  const ownerFetch = async (email: string,item :string): Promise<Owner[] | null | any > => {
     
-    const result = await ownerModel.find({ email:email }).populate("User")
-    console.log(result,"res");
+    const page : any = item
+    const  pageSize =5
+    const skipCount = (page - 1) * pageSize
+    const result = await ownerModel.find({ email:email }).populate("User").skip(skipCount).limit(pageSize)
+    
+    const userCount :any = result[0].User?.length
+  const totalCount = Math.ceil(userCount/pageSize) 
+
+    
     
 
     
-    return result;
+    return {result,totalCount};
   };
   const ownerFetchById = async (ownerid: string): Promise<Owner[] | null> => {
     const objectid = new ObjectId(ownerid);
@@ -91,18 +96,16 @@ export const OwnerRepositoryImpl = (
     userId: string,
     ownerid: string
   ): Promise<Owner[] | null | updateRes> => {
-    console.log("getting");
 
     const result = await ownerModel.updateMany(
       { _id: ownerid },
-      { $push: { User: userId } }
+      { $addToSet: { User: userId } }
     );
     return result ? result : null;
   };
   const userList = async (id: string): Promise<Owner[] | null> => {
     const objectId = new ObjectId(id);
     const result = await ownerModel.find({ _id: objectId });
-
     return result ? result : null;
   };
 
