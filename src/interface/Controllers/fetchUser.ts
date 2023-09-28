@@ -10,6 +10,8 @@ const userRepo = UserRepositoryImpl(db);
 export const fetchUsersController = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
+    // const existUser =fetchUsers(userRepo)(email)
+
 
     const userDetail = await fetchUsers(userRepo)(email);
 

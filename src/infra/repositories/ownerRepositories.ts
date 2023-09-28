@@ -13,6 +13,8 @@ export type ownerRepository = {
   updatePremium(stadiumId :string,orderId:string,ownerId : string,userId : string,stadiumPrice :string,date:string,startDate : string ,endDate : string): Promise<Owner | void | updateRes>;
   ownerFetch(email: string,item :string): Promise<Owner[]| null | any>;
   ownerFetchById(ownerid: string): Promise<Owner[] | null>;
+  changePassword(email :string,changedpassword:string) : Promise<Owner | null | updateRes>
+
   userInfo(
     userId: string,
     ownerid: string
@@ -114,7 +116,11 @@ export const OwnerRepositoryImpl = (
     const result = await ownerModel.find({ _id: objectId });
     return result ? result : null;
   };
+  const changePassword =async (email :string,changedpassword :string):Promise<Owner | null | updateRes>=>{
+    const result =await ownerModel.updateOne({email :email},{$set:{password :changedpassword}})
 
+    return result ? result : null
+  }
   return {
     findByEmail,
     create,
@@ -126,5 +132,6 @@ export const OwnerRepositoryImpl = (
     userInfo,
     userList,
     ownerFetchById,
+    changePassword
   };
 };

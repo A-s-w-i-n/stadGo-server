@@ -3,6 +3,7 @@ import { adminModel } from "../../infra/database/adminModel";
 import { adminRepositoryimpl } from "../../infra/repositories/adminRepository";
 import { generateAccessToken } from "../../utils/jwtAuthentication";
 import { adminLogin } from "../../app/usecases/admin/adminLogin";
+import { json } from "body-parser";
 const db = adminModel;
 
 const adminRepo = adminRepositoryimpl(db);
@@ -13,6 +14,8 @@ export const AdminLoginController = async (req: Request, res: Response) => {
   try {
     const adminLoginCheck = await adminLogin(adminRepo)(email, password);
 
+    
+    
     if (adminLoginCheck) {
       const { _id, email } = JSON.parse(JSON.stringify(adminLoginCheck));
       const accessToken = generateAccessToken(_id, email);

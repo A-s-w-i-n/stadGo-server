@@ -17,7 +17,7 @@ export const ownerLogin = async (req: Request, res: Response) => {
       const { _id, username } = JSON.parse(JSON.stringify(ownerLoginCheck));
       const accessToken = generateAccessToken(_id, username);
       res.status(200).json({
-        message: "owner login successfull",
+        message: "",
         ownerLoginCheck,
         accessToken,
       });

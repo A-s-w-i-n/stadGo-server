@@ -7,6 +7,7 @@ export type otpRepository = {
 };
 
 export const otpRepositoryImpl = (otpModel: MongoDBOtp): otpRepository => {
+
   const createOtp = async (user: OTPuser) => {
     const createUserOtp = await otpModel.create(user);
 

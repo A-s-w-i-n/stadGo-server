@@ -8,6 +8,7 @@ import {
   fecthUserImage,
   userUpdateImg,
 } from "../../app/usecases/user/profileImg";
+import { upadatePassword } from "../../app/usecases/user/updatePassword";
 
 const db = userModel;
 
@@ -77,3 +78,19 @@ export const findProfileImg = async (req: Request, res: Response) => {
     res.status(500).json({ error: "internal server error" });
   }
 };
+export const changedpassword = async (req :Request,res: Response)=>{
+  try {
+    const {email,changedpassword} =req.body
+
+    const change =await upadatePassword(userRepository)(email,changedpassword)
+
+    if(change){
+      res.status(200).json({message : "password updated",change})
+    }else{
+      res.json("password is not updated")
+    }
+  } catch (error) {
+    res.status(500).json({error : "internal server error"})
+    
+  }
+}

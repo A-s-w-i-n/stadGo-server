@@ -3,6 +3,8 @@ import { ownerModel } from "../../infra/database/ownerModel";
 import { fetchOwnerById, fetchOwners } from "../../app/usecases/Owner/fetchOwner";
 import { OwnerRepositoryImpl } from "../../infra/repositories/ownerRepositories";
 import {  userDetails, userList } from "../../app/usecases/Owner/userList";
+import { upadatePassword } from "../../app/usecases/user/updatePassword";
+import { OwnerupadatePassword } from "../../app/usecases/Owner/passwordUpdate";
 
 const db = ownerModel;
 
@@ -66,3 +68,20 @@ export const listUser = async (req: Request, res: Response) => {
     res.status(500).json({ error: "internal server error" });
   }
 };
+export const Ownerchangedpassword = async (req :Request,res: Response)=>{
+  try {
+    const {email,changedpassword} =req.body
+
+    const change =await OwnerupadatePassword(ownerRepo)(email,changedpassword)
+
+    if(change){
+      res.status(200).json({message : "password updated",change})
+    }else{
+      res.json("password is not updated")
+    }
+  } catch (error) {
+    res.status(500).json({error : "internal server error"})
+    
+  }
+}
+

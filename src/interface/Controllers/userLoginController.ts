@@ -18,7 +18,7 @@ export const Login = async (req: Request, res: Response) => {
 
       res
         .status(200)
-        .json({ message: "login successfull", LoginCheck, accessToken });
+        .json({ message: "", LoginCheck, accessToken });
     } else {
       res.json({ message: "email or password  not valid" });
     }

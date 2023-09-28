@@ -14,6 +14,7 @@ export type userRepository = {
   userFetch(emai: string): Promise<User | null>;
   updataProfile(id: string, url: string): Promise<User | updateRes | void | null>;
   findProfileImg(id: string): Promise<User | null>;
+  changePassword(email :string,changedpassword:string) : Promise<User | null | updateRes>
 };
 
 export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
@@ -65,9 +66,9 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
     
   };
   const userFetch = async (email: string): Promise<User | null> => {
-    const result = await userModel.findOne({ email });
-
-    return result;
+    
+    const result = await userModel.findOne({email});
+    return result ? result : null ;
   };
   const updataProfile = async (
     id: string,
@@ -90,7 +91,11 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
 
     return result;
   };
+  const changePassword =async (email :string,changedpassword :string):Promise<User | null | updateRes>=>{
+    const result =await userModel.updateOne({email :email},{$set:{password :changedpassword}})
 
+    return result ? result : null
+  }
   return {
     findByEmail,
     create,
@@ -101,5 +106,6 @@ export const UserRepositoryImpl = (UserModel: MongoDBUser): userRepository => {
     userFetch,
     updataProfile,
     findProfileImg,
+    changePassword
   };
 };
