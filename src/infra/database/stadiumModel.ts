@@ -49,6 +49,10 @@ const stadiumSchema = new Schema<stadium>({
   id: {
     type: mongoose.Types.ObjectId,
   },
+  isBooked : {
+    type :Boolean,
+    default : false
+  }
 });
 export const stadiumModel: MongoDBStadium = mongoose.connection.model<
   Document & stadium

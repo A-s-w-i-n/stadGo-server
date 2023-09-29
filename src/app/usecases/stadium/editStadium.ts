@@ -12,3 +12,21 @@ export const editStadiumDetail = (stadiumRepo : stadiumRepository) =>async (id:s
     }
     return null
 }
+export const checkBooked = (stadiumRepo : stadiumRepository)=> async (booked : string)=>{
+    const check = await stadiumRepo.bookedCheck(booked)
+
+    if(check){
+        return check
+    }
+    return null
+
+}
+export const changeBooked = (stadiumRepo : stadiumRepository)=> async (email : string)=>{
+    const check = await stadiumRepo.updateStatus(email)
+
+    if(check){
+        return check
+    }
+    return null
+
+}

@@ -14,4 +14,5 @@ export interface stadium {
   email?: string;
   video?: string;
   id?: mongoose.Types.ObjectId;
+  isBooked? : Boolean
 }

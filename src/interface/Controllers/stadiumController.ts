@@ -13,7 +13,7 @@ import {
 } from "../../app/usecases/stadium/filterStadium";
 import { updateVideo } from "../../app/usecases/stadium/videoUplode";
 import mongoose from "mongoose";
-import { editStadiumDetail } from "../../app/usecases/stadium/editStadium";
+import { changeBooked, checkBooked, editStadiumDetail } from "../../app/usecases/stadium/editStadium";
 
 const db = stadiumModel;
 const stadiumRepository = stadiumRepositoryImpl(db);
@@ -186,3 +186,37 @@ export const filterLocation = async (req: Request, res: Response) => {
     res.status(500).json({ error: "internal server error" });
   }
 };
+export const  booked = async (req : Request,res : Response)=>{
+  try {
+    const {booked} = req.body
+    console.log(req.body,"wwwwwwwww");
+    
+
+    const check = await checkBooked(stadiumRepository)(booked)
+
+    if(check){
+      res.status(200).json({message : "booking is confirmed"})
+    }else{
+      res.json({fail : "booking failed"})
+    }
+  } catch (error) {
+    res.status(500).json({error : "internal server error"})
+  }
+}
+export const  changeStatus = async (req : Request,res : Response)=>{
+  try {
+    const {email} = req.body
+    console.log(req.body,"wwwwwwwww");
+    
+
+    const check = await changeBooked(stadiumRepository)(email)
+
+    if(check){
+      res.status(200).json({message : "Status changed"})
+    }else{
+      res.json({fail : "booking failed"})
+    }
+  } catch (error) {
+    res.status(500).json({error : "internal server error"})
+  }
+}

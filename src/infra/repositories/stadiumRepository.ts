@@ -28,6 +28,9 @@ export type stadiumRepository = {
     price: string,
     discription: string
   ): Promise<stadium | void | updateRes | null>;
+
+  bookedCheck(booked : string) : Promise<stadium | null | updateRes>
+  updateStatus(email : string) : Promise<stadium | null | updateRes>
 };
 
 export const stadiumRepositoryImpl = (
@@ -106,6 +109,19 @@ export const stadiumRepositoryImpl = (
 
     return filter;
   };
+  const bookedCheck = async (booked : string):Promise<stadium | null | updateRes>=>{
+    const id =new ObjectId(booked)
+    const check = await stadiumModel.updateOne({_id : id},{$set : {isBooked : true}})
+
+    return check ? check : null
+
+  }
+  const updateStatus = async (email : string):Promise<stadium | null | updateRes>=>{
+    const check = await stadiumModel.updateOne({email : email},{$set : {isBooked : false}})
+
+    return check ? check : null
+
+  }
 
 
   return {
@@ -117,5 +133,7 @@ export const stadiumRepositoryImpl = (
     editStadium,
     filterStadium,
     filterLocation,
+    bookedCheck,
+    updateStatus
   };
 };

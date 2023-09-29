@@ -1,5 +1,7 @@
 import { Router } from "express";
 import {
+  booked,
+  changeStatus,
   filterLocation,
   stadFilter,
   stadiumController,
@@ -22,6 +24,8 @@ stadiumRouter.post("/detaildView", userVerifyToken, stadiumDetaildView);
 stadiumRouter.post('/editStadium',ownerVerifyToken,stadiumEdit)
 stadiumRouter.post('/stadFilter',userVerifyToken,stadFilter)
 stadiumRouter.post('/stadiumLocationFilter',userVerifyToken,filterLocation)
+stadiumRouter.post('/bookedCheck',userVerifyToken,booked)
+stadiumRouter.post('/changeStatus',changeStatus)
 
 
 export default stadiumRouter;
