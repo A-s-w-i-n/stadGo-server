@@ -13,10 +13,7 @@ const adminVarifiction =async(req :Request,res:Response,next:NextFunction)=>{
         const data =jwt.verify(token,process.env.JWT_SECRETE as string)
 
         if(data){
-            console.log(data,"kkkk");
-
             next()
-            
         }else{
 
         }
