@@ -21,7 +21,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000","https://stadgo-client-side.vercel.app"],
+    origin: ["http://localhost:3000","https://stadgo-client-side.vercel.app","http://13.53.117.242/"],
     methods: ["GET", "POST"],
     credentials: true,
   })
