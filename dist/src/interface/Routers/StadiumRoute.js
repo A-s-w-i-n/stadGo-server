@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const stadiumController_1 = require("../Controllers/stadiumController");
+const stadiumController_2 = require("../Controllers/stadiumController");
+const stadiumController_3 = require("../Controllers/stadiumController");
+const userAuth_1 = __importDefault(require("../Middleware/userAuth"));
+const ownerAuth_1 = __importDefault(require("../Middleware/ownerAuth"));
+const stadiumRouter = (0, express_1.Router)();
+stadiumRouter.post("/staiumDetails", stadiumController_1.stadiumController);
+stadiumRouter.post("/fetchStadium", ownerAuth_1.default, stadiumController_2.stadimDataFetch);
+stadiumRouter.get("/fetchStadiumList", stadiumController_3.stadiumList);
+stadiumRouter.post("/detaildView", userAuth_1.default, stadiumController_1.stadiumDetaildView);
+stadiumRouter.post('/editStadium', ownerAuth_1.default, stadiumController_1.stadiumEdit);
+stadiumRouter.post('/stadFilter', userAuth_1.default, stadiumController_1.stadFilter);
+stadiumRouter.post('/stadiumLocationFilter', userAuth_1.default, stadiumController_1.filterLocation);
+stadiumRouter.post('/bookedCheck', userAuth_1.default, stadiumController_1.booked);
+stadiumRouter.post('/changeStatus', stadiumController_1.changeStatus);
+exports.default = stadiumRouter;

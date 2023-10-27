@@ -1,0 +1,25 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const userController_1 = require("../Controllers/userController");
+const userLoginController_1 = require("../Controllers/userLoginController");
+const paymentController_1 = require("../Controllers/paymentController");
+const fetchUser_1 = require("../Controllers/fetchUser");
+const userOtpAuth_1 = require("../Controllers/userOtpAuth");
+const otpvarificationContorller_1 = require("../Controllers/otpvarificationContorller");
+const userRouter = (0, express_1.Router)();
+userRouter.get("/", (req, res) => {
+    console.log("working");
+    res.json({ status: true });
+});
+userRouter.post("/userRegister", userController_1.userSignController);
+userRouter.post("/login", userLoginController_1.Login);
+userRouter.post("/userPayment", paymentController_1.userPremiumController);
+userRouter.post("/fetchUsers", fetchUser_1.fetchUsersController);
+userRouter.post("/otp", userOtpAuth_1.otpAuthContoller);
+userRouter.post('/forgotpassword', userOtpAuth_1.forgotPassword);
+userRouter.post("/verifyOtp", otpvarificationContorller_1.otpVerification);
+userRouter.post("/userProfileImage", userController_1.updateImageControll);
+userRouter.post("/fetchProfileImg", userController_1.findProfileImg);
+userRouter.post("/updatePassword", userController_1.changedpassword);
+exports.default = userRouter;
